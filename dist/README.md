@@ -34,9 +34,9 @@ Logs are at /var/log/eb-docker/containers/web|sidekiq
 1. Push image to ECR
 
     # Docker Login
-    aws ecr get-login-password --profile reconnect-api --region us-west-2 | docker login --username AWS --password-stdin 135203793283.dkr.ecr.us-west-2.amazonaws.com
-    docker tag reconnect-api:latest 135203793283.dkr.ecr.us-west-2.amazonaws.com/reconnect-api:latest
-    docker push 135203793283.dkr.ecr.us-west-2.amazonaws.com/reconnect-api:latest
+    aws ecr get-login-password --profile reconnect --region us-east-1 | docker login --username AWS --password-stdin 879538747604.dkr.ecr.us-east-1.amazonaws.com
+    docker tag reconnect-api:latest 879538747604.dkr.ecr.us-east-1.amazonaws.com/reconnect-api:latest
+    docker push 879538747604.dkr.ecr.us-east-1.amazonaws.com/reconnect-api:latest
 
 1. eb deploy
 

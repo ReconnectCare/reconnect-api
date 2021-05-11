@@ -26,13 +26,13 @@ build-image: ## Build a new docker image
 	pack build reconnect-api --env NODE_ENV=production --env RAILS_ENV=production --env RAILS_MASTER_KEY=$(PRODUCTION_KEY) --path ../ --buildpack ./ruby-buildpack --descriptor project.toml --builder paketobuildpacks/builder:full
 
 tag-image: ## Tag the image for AWS
-	docker tag reconnect-api:latest 135203793283.dkr.ecr.us-west-2.amazonaws.com/reconnect-api:$(image_tag)
+	docker tag reconnect-api:latest 879538747604.dkr.ecr.us-east-1.amazonaws.com/reconnect-api:$(image_tag)
 
 docker-login: ## Login to AWS docker repo
-	aws ecr get-login-password --profile reconnect-api --region us-west-2 | docker login --username AWS --password-stdin 135203793283.dkr.ecr.us-west-2.amazonaws.com
+	aws ecr get-login-password --profile reconnect-api --region us-west-2 | docker login --username AWS --password-stdin 879538747604.dkr.ecr.us-east-1.amazonaws.com
 
 deploy-image: tag-image docker-login ## Send image to AWS
-	docker push 135203793283.dkr.ecr.us-west-2.amazonaws.com/reconnect-api:$(image_tag)
+	docker push 879538747604.dkr.ecr.us-east-1.amazonaws.com/reconnect-api:$(image_tag)
 
 deploy: clean docker-compose.yml ## update the EB ENV
 	eb deploy $(ENV)

@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   web:
-    image: "135203793283.dkr.ecr.us-west-2.amazonaws.com/reconnect-api:^TAG"
+    image: "879538747604.dkr.ecr.us-east-1.amazonaws.com/reconnect-api:^TAG"
     ports:
       - "80:5000"
     volumes:
@@ -14,7 +14,7 @@ services:
       RAILS_SERVE_STATIC_FILES: "true"
       RAILS_MASTER_KEY: "${RAILS_MASTER_KEY}"
   sidekiq:
-    image: "135203793283.dkr.ecr.us-west-2.amazonaws.com/reconnect-api:^TAG"
+    image: "879538747604.dkr.ecr.us-east-1.amazonaws.com/reconnect-api:^TAG"
     entrypoint: sidekiq
     volumes:
       - "${EB_LOG_BASE_DIR}/sidekiq:/workspace/log"
