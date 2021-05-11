@@ -46,7 +46,7 @@ In View
 * Change database names in database.yml
 * Find and replace
 
-    rg -li ReconnectApi | xargs -n 1 sed -i'' -e 's/ReconnectApi/Profilrr/g' && rg -i ReconnectApi
+    rg -l ReconnectApi | xargs -n 1 sed -i'' -e 's/ReconnectApi/Profilrr/g'
 
     rg -l 'RAILS_STARTER_6' | xargs -n 1 sed -i '' -e 's/RAILS_STARTER_6/RECONNECT_API/g'
 
@@ -58,12 +58,12 @@ In View
 
     rg -l 'rails-starter6' | xargs -n 1 sed -i '' -e 's/rails-starter6/reconnect-api/g'
 
-    rg -i 'rails[-_]?starter[-_]?6'
+    rg -l 'Rails Starter 6' | xargs -n 1 sed -i '' -e 's/Rails Starter 6/Reconnect Api/g'
 
     # check
-    rg -i 'rails[-_]starter[-_]6'
+    rg -i 'rails[- _]*starter[- _]*6'
 
-    rg -li 'rails starter 6' | xargs -n 1 sed -i'' -e 's/Rails Starter 6/Profilrr/g' && rg -i 'rails starter 6'
+Setup Data
 
     rails db:create
     rails db:migrate

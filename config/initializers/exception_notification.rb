@@ -16,7 +16,7 @@ ExceptionNotification.configure do |config|
 
   # Email notifier sends notifications by email.
   config.add_notifier :email, {
-    email_prefix: "[Rails Starter 6] ",
+    email_prefix: "[Reconnect Api] ",
     sender_address: %("Dusty" <candland@gmail.com>),
     exception_recipients: %w[candland@gmail.com]
   }

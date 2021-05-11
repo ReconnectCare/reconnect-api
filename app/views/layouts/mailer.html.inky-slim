@@ -15,6 +15,6 @@ html[xmlns='http://www.w3.org/1999/xhtml']
       row
         columns
           hr
-          => link_to "Rails Starter 6", "https://reconnect-api"
+          => link_to "Reconnect Api", "https://reconnect-api"
           small
-            You are receiving this because you're a user of Rails Starter 6!
+            You are receiving this because you're a user of Reconnect Api!
