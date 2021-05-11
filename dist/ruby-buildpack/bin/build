@@ -1,0 +1,164 @@
+#!/usr/bin/env bash
+set -eo pipefail
+
+echo "---> Ruby Buildpack"
+
+# GET ARGS
+layersdir=$1
+
+# DOWNLOAD RUBY
+echo ""
+echo "---> Ruby Install"
+rubylayer="$layersdir"/ruby
+mkdir -p "$rubylayer"
+
+ruby_url=https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/heroku-18/ruby-2.7.1.tgz
+if [[ ! -f "$rubylayer"/bin/ruby ]] ; then
+  echo "     Downloading and extracting Ruby"
+  wget -q -O - "$ruby_url" | tar -xzf - -C "$rubylayer"
+  echo -e 'cache = true\nlaunch = true' > "$rubylayer.toml"
+fi
+
+# MAKE RUBY AVAILABLE TO THIS SCRIPT
+RUBY_PATH="$rubylayer/bin"
+export PATH="$RUBY_PATH:$PATH"
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH:+${LD_LIBRARY_PATH}:}"$rubylayer/lib"
+
+echo "     ruby version $(ruby -v)"
+
+# INSTALL NODE & YARN
+echo ""
+echo "---> NodeJS"
+nodelayer="$layersdir/node"
+mkdir -p "$nodelayer"
+echo -e 'cache = true\nlaunch = true' > "$nodelayer.toml"
+
+node_url=https://nodejs.org/download/release/v12.20.0/node-v12.20.0-linux-x64.tar.gz
+if [[ ! -f "$nodelayer"/node/bin/node ]] ; then
+  echo "     Downloading and extracting NodeJS"
+  wget -q -O - "$node_url" | tar -xzf - -C "$nodelayer"
+  mv "$nodelayer"/node-v12.20.0-linux-x64 "$nodelayer"/node
+fi
+
+NODE_PATH="$nodelayer/node/bin"
+export PATH="$NODE_PATH:$PATH"
+
+echo "     node version $(node -v)"
+
+# YARN
+echo ""
+echo "---> Yarn"
+
+yarn_url=https://github.com/yarnpkg/yarn/releases/download/v1.22.10/yarn-v1.22.10.tar.gz
+if [[ ! -f "$nodelayer"/yarn/bin/yarn ]] ; then
+  echo "     Downloading and extracting Yarn"
+  wget -q -O - "$yarn_url" | tar -xzf - -C "$nodelayer"
+  mv "$nodelayer"/yarn-v1.22.10 "$nodelayer"/yarn
+fi
+
+YARN_PATH="$nodelayer/yarn/bin"
+export PATH="$YARN_PATH:$PATH"
+
+mkdir -p "$nodelayer/profile.d/"
+echo "     Prepending $NODE_PATH:$YARN_PATH to PATH"
+echo "export PATH=$NODE_PATH:$YARN_PATH:\$PATH" > "$nodelayer/profile.d/01_path.sh"
+
+echo "     yarn version $(yarn -v)"
+
+#  Modules layer
+echo ""
+echo "---> Node modules layer"
+
+moduleslayer="$layersdir/modules"
+mkdir -p "$moduleslayer"
+
+local_modules="$(pwd)/node_modules"
+
+rm -rf "$local_modules"
+mkdir -p "$moduleslayer/node_modules"
+ln -s "$moduleslayer/node_modules" "$local_modules"
+
+echo -e 'cache = true\nlaunch = true' > "$moduleslayer.toml"
+
+NODE_MODULES_PATH="$moduleslayer/node_modules/.bin"
+export PATH="$NODE_MODULES_PATH:$PATH"
+
+mkdir -p "$moduleslayer/profile.d/"
+echo "     Prepending $NODE_MODULES_PATH to PATH"
+echo "export PATH=$NODE_MODULES_PATH:\$PATH" > "$moduleslayer/profile.d/01_path.sh"
+
+
+# INSTALL GEMS
+echo ""
+echo "---> Bundle"
+
+# [DEPRECATED] The `--path` flag is deprecated because it relies on being remembered across bundler invocations, which bundler will no longer do in future versions. Instead please use `bundle config set path '/layers/net.candland.buildpacks.ruby/bundler'`, and stop using this flag
+# [DEPRECATED] The `--without` flag is deprecated because it relies on being remembered across bundler invocations, which bundler will no longer do in future versions. Instead please use `bundle config set without 'development:test'`, and stop using this flag
+# [DEPRECATED] The --binstubs option will be removed in favor of `bundle binstubs`
+
+bundlerlayer="$layersdir/bundler"
+mkdir -p "$bundlerlayer"
+
+local_bundler_checksum=$(sha256sum Gemfile.lock | cut -d ' ' -f 1)
+remote_bundler_checksum=$(cat "$bundlerlayer.toml" | yj -t | jq -r .metadata 2>/dev/null || echo 'not found')
+
+bundle config --local path "$bundlerlayer" >/dev/null
+bundle config --local bin "$bundlerlayer/bin" >/dev/null
+bundle config --local without development:test >/dev/null
+
+if [[ ! -z "$SKIP_GEM_CACHE" ]] ; then
+  echo "     SKIPPING GEM CACHE"
+fi
+
+if [[ -f Gemfile.lock && $local_bundler_checksum == $remote_bundler_checksum && -z "$SKIP_GEM_CACHE" ]] ; then
+  # Determine if no gem dependencies have changed, so it can reuse existing gems without running bundle install
+  echo "---> Reusing gems"
+else
+  # Determine if there has been a gem dependency change and install new gems to the bundler layer; re-using existing and un-changed gems
+  echo "---> Installing gems"
+  echo -e "cache = true\nlaunch = true\nmetadata = \"$local_bundler_checksum\"" > "$bundlerlayer.toml"
+  bundle install
+fi
+
+bundle binstubs --all --path="$bundlerlayer/bin"
+
+# ASSETS
+echo ""
+echo "---> compile assets"
+
+bundle exec rails assets:precompile
+
+echo ""
+echo "---> PATH"
+echo "     $PATH"
+
+echo ""
+echo "---> launch commands"
+echo "     Writing to: $layersdir/launch.toml"
+
+# SET DEFAULT START COMMAND
+cat > "$layersdir/launch.toml" <<EOL
+[[processes]]
+type = "web"
+command = 'rails db:migrate && rails server -b 0.0.0.0 -p \${PORT:-5000} -e \$RAILS_ENV'
+
+# our worker process
+[[processes]]
+type = "sidekiq"
+command = 'bundle exec sidekiq -C config/sidekiq.yml -e \$RAILS_ENV'
+
+# console
+[[processes]]
+type = "console"
+command = 'bundle exec rails console -e \$RAILS_ENV'
+
+# shell with env
+[[processes]]
+type = "shell"
+command = 'bash'
+
+# rails
+[[processes]]
+type = "rails"
+command = 'bundle exec rails'
+EOL

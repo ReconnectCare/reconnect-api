@@ -1,0 +1,14 @@
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+
+ruby-buildpack
+project.toml
+
+Makefile
+README.md
+
+docker-compose.dev.yml
+docker-compose.template.yml

@@ -1,0 +1,30 @@
+[project]
+id = "com.reconnect-api"
+name = "ReconnectApi"
+version = "1.0.0"
+
+[build]
+exclude = [
+    ".bundle",
+    "log",
+    "tmp",
+    "storage",
+    "public/assets",
+    ".byebug_history",
+    "public/packs",
+    "public/packs-test",
+    "node_modules",
+    "yarn-error.log",
+    ".DS_Store",
+    "config/master.key",
+    "config/credentials/production.key",
+    "config/credentials/staging.key",
+    ".env",
+    ".envrc",
+    ".sprockets-manifest-*.json",
+    ".git",
+    ".gitignore",
+    ".ebextensions",
+    ".elasticbeanstalk",
+    "dist"
+]

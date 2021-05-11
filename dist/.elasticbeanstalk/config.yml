@@ -1,0 +1,22 @@
+branch-defaults:
+  default:
+    environment: reconnect-api-staging
+    group_suffix: null
+environment-defaults:
+  irequestrx-docker:
+    branch: null
+    repository: null
+global:
+  application_name: reconnect-api
+  branch: null
+  default_ec2_keyname: null
+  default_platform: Docker
+  default_region: us-west-2
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: reconnect
+  repository: null
+  sc: null
+  workspace_type: Application

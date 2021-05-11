@@ -1,0 +1,13 @@
+# Buildpack API version
+api = "0.2"
+
+# Buildpack ID and metadata
+[buildpack]
+id = "net.candland.buildpacks.ruby"
+version = "0.0.1"
+name = "Ruby Buildpack"
+
+# Stacks that the buildpack will work with
+[[stacks]]
+id = "io.buildpacks.stacks.bionic"
+# mixins = ["build:git", "run:imagemagick", "wget"]
