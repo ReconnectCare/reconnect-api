@@ -1,0 +1,61 @@
+/* FORMS */
+.data-form,
+.simple_form {
+  label {
+    @apply block text-sm font-bold mb-2
+  }
+
+  input[type=text],
+  input[type=password],
+  input[type=email],
+  input[type=tel],
+  input[type=file],
+  input[type=url],
+  textarea {
+    @apply bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight;
+    &:focus {
+      @apply outline-none bg-white border-blue-500;
+    }
+  }
+
+  input[type=radio],
+  input[type=checkbox] {
+    @apply mr-2 leading-tight;
+  }
+
+  input[type=submit],
+  input[type=reset],
+  button,
+  a.button {
+    @apply shadow bg-blue-500 text-white font-bold py-2 px-4 rounded;
+    &:hover {
+      @apply bg-blue-400;
+    }
+    &:focus {
+      @apply ring outline-none;
+    }
+  }
+
+  div.input {
+    @apply pb-3;
+  }
+
+  .field_with_errors {
+    input {
+      @apply border-red-700;
+    }
+  }
+
+  .field_without_errors {
+    input {
+      @apply border-green-700;
+    }
+  }
+
+  fieldset {
+    @apply pb-4;
+    legend {
+      @apply pb-2;
+    }
+  }
+}

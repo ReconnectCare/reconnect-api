@@ -1,0 +1,40 @@
+header.container.mx-auto
+
+  nav.flex.flex-wrap.justify-between.items-baseline
+    .flex-shrink
+      a href="/"
+        =image_pack_tag("logo.svg", style: "height: 32px;", alt: "Rails Starter 6 Logo")
+
+    div class="p-4 block lg:hidden" data-menu="navbarHeader"
+      button class="flex items-center px-3 py-2 border rounded text-teal-lighter border-teal-light hover:text-white hover:border-white"
+        svg.h-3.w-3 viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+          title Menu
+          path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"
+
+    #navbarHeader class="hidden w-full lg:w-auto block pt-5 lg:flex collapse navbar-collapse"
+      ul class="flex flex-col lg:flex-row justify-start lg:justify-end ml-auto.border-t border-solid lg:border-none lg:items-baseline"
+        - if user_signed_in?
+          li class="hidden p-2 border-b border-solid lg:border-none lg:block"
+            - @current_user.roles.each do |role|
+              span.rounded.bg-green-200.text-green-600.text-xs.py-1.px-3.pr-2 => role
+
+        - if user_signed_in?
+          li class="p-2 border-b border-solid lg:border-none" = link_to dashboard_url do
+            i.fas.fa-tachometer-alt
+            | &nbsp;Dashboard
+          li class="p-2 border-b border-solid lg:border-none" = link_to "/admin/sidekiq", target: "_blank" do
+            i.fas.fa-atom
+            | &nbsp;Sidekiq
+          li class="p-2 border-b border-solid lg:border-none" =< link_to edit_user_registration_path do
+            img class="rounded-full inline" src=current_user.gravitar_url(32)
+            =< current_user.first_name
+          li class="p-2 border-b border-solid lg:border-none" =< link_to destroy_user_session_path, method: :DELETE do
+            i.fas.fa-sign-out-alt
+            | &nbsp;Log Out
+        - else
+          li class="p-2 border-b border-solid lg:border-none" =< link_to new_user_session_path do
+            i.fas.fa-sign-in-alt
+            | &nbsp;Log In
+          li class="p-2 border-b border-solid lg:border-none" =< link_to new_user_registration_path do
+            i.fas.fa-user-plus
+            | &nbsp;Sign Up

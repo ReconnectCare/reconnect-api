@@ -1,0 +1,39 @@
+a {
+  @apply text-blue-700;
+  &:hover {
+    @apply text-blue-400 underline;
+  }
+}
+
+/* PAGING */
+ul.pagination {
+  @apply flex flex-row;
+
+  li {
+    @apply p-2;
+
+    a {
+      @apply text-gray-700
+    }
+  }
+}
+
+.table {
+  @apply table-auto w-full border-collapse bg-white shadow-md rounded mb-4;
+}
+tr {
+  @apply border-b;
+}
+th {
+  @apply text-left;
+}
+th, td {
+  @apply p-2;
+}
+
+td.actions {
+  @apply text-right;
+  a, .disabled {
+    @apply pl-2;
+  }
+}

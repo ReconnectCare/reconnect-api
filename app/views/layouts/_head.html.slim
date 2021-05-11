@@ -1,0 +1,22 @@
+meta content="text/html; charset=UTF-8" http-equiv="Content-Type"
+meta charset="utf-8"
+meta content="IE=edge" http-equiv="X-UA-Compatible"
+meta content="width=device-width, initial-scale=1" name="viewport"
+
+title
+  | ReconnectApi
+= csrf_meta_tags
+= csp_meta_tag
+
+meta name="description" content="TODO: Fix me"
+
+link href="/favicon.ico" rel="icon" type="image/x-icon"
+link href="/favicon.png" rel="icon" sizes="32x32" type="image/png"
+link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"
+meta content="/mstile-144x144.png" name="msapplication-TileImage"
+meta content="#00aba9" name="msapplication-TileColor"
+
+= stylesheet_pack_tag 'application', 'data-turbo-track': 'reload'
+= javascript_pack_tag 'application', 'data-turbo-track': 'reload'
+
+= yield :js_head
