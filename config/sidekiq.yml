@@ -1,0 +1,16 @@
+---
+:verbose: true
+:concurrency:  3
+
+# :max_retries: 3
+# :timeout: 8
+
+:queues:
+  - critical
+  - default
+  - low
+  - mailers
+  - action_mailbox_routing
+  - action_mailbox_incineration
+  - active_storage_analysis
+  - active_storage_purge

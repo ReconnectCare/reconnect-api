@@ -21,6 +21,10 @@ test:
   <<: *default
   database: reconnect_api_test
 
+staging:
+  <<: *default
+  url: <%= Rails.application.credentials.dig(:database, :url) %>
+
 production:
   <<: *default
-  url: <%= ENV['DATABASE_URL'] %>
+  url: <%= Rails.application.credentials.dig(:database, :url) %>

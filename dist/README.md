@@ -1,9 +1,11 @@
 ## Beanstalk
 
-AmazonEC2ContainerRegistryReadOnly to role: aws-elasticbeanstalk-ec2-role
-
-Add inbound ALL TCP to 172.31.0.0/16 on ec2-security-group
-Add inbound Postgres to ec2-security-group on database-security-group
+* AmazonEC2ContainerRegistryReadOnly to role: aws-elasticbeanstalk-ec2-role
+* Add inbound ALL TCP to 172.31.0.0/16 on ec2-security-group (NSQ or Other Services)
+* Add inbound Postgres to ec2-security-group on database-security-group
+* `eb setenv RAILS_ENV=staging RAILS_MASTER_KEY=\`cat ../config/credentials/staging.key\``
+* Add HTTPS to LB
+* Add 443 to LB Security Group
 
 ### Instances
 

@@ -3,7 +3,7 @@ branch-defaults:
     environment: reconnect-api-staging
     group_suffix: null
 environment-defaults:
-  irequestrx-docker:
+  reconnect-api-staging:
     branch: null
     repository: null
 global:
@@ -11,7 +11,7 @@ global:
   branch: null
   default_ec2_keyname: null
   default_platform: Docker
-  default_region: us-west-2
+  default_region: us-east-1
   include_git_submodules: true
   instance_profile: null
   platform_name: null

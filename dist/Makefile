@@ -1,6 +1,6 @@
 .PHONY: help
 
-AWS_REGION = us-west-2
+AWS_REGION = us-east-1
 
 APP_NAME := reconnect-api
 BUILD := $(shell git rev-parse --short HEAD)
@@ -29,7 +29,7 @@ tag-image: ## Tag the image for AWS
 	docker tag reconnect-api:latest 879538747604.dkr.ecr.us-east-1.amazonaws.com/reconnect-api:$(image_tag)
 
 docker-login: ## Login to AWS docker repo
-	aws ecr get-login-password --profile reconnect-api --region us-west-2 | docker login --username AWS --password-stdin 879538747604.dkr.ecr.us-east-1.amazonaws.com
+	aws ecr get-login-password --profile reconnect --region us-east-1 | docker login --username AWS --password-stdin 879538747604.dkr.ecr.us-east-1.amazonaws.com
 
 deploy-image: tag-image docker-login ## Send image to AWS
 	docker push 879538747604.dkr.ecr.us-east-1.amazonaws.com/reconnect-api:$(image_tag)
