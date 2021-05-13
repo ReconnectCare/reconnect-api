@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :conferences
   resources :patients
   resources :providers
   resources :conference_numbers

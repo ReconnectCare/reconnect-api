@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_13_205638) do
+ActiveRecord::Schema.define(version: 2021_05_13_211630) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -49,6 +49,20 @@ ActiveRecord::Schema.define(version: 2021_05_13_205638) do
     t.string "number", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "conferences", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "sid"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.uuid "conference_number_id", null: false
+    t.uuid "patient_id", null: false
+    t.uuid "provider_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["conference_number_id"], name: "index_conferences_on_conference_number_id"
+    t.index ["patient_id"], name: "index_conferences_on_patient_id"
+    t.index ["provider_id"], name: "index_conferences_on_provider_id"
   end
 
   create_table "patients", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -108,4 +122,7 @@ ActiveRecord::Schema.define(version: 2021_05_13_205638) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "conferences", "conference_numbers"
+  add_foreign_key "conferences", "patients"
+  add_foreign_key "conferences", "providers"
 end

@@ -1,0 +1,31 @@
+h1 Listing conferences
+
+table
+  thead
+    tr
+      th Sid
+      th Start time
+      th End time
+      th Conference number
+      th Provider
+      th Patient
+      th
+      th
+      th
+
+  tbody
+    - @conferences.each do |conference|
+      tr
+        td = conference.sid
+        td = conference.start_time
+        td = conference.end_time
+        td = conference.conference_number
+        td = conference.provider
+        td = conference.patient
+        td = link_to 'Show', conference
+        td = link_to 'Edit', edit_conference_path(conference)
+        td = link_to 'Destroy', conference, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Conference', new_conference_path

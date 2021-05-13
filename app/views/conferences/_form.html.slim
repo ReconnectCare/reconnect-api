@@ -1,0 +1,14 @@
+= simple_form_for(@conference) do |f|
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .form-inputs
+    = f.input :sid
+    = f.input :start_time
+    = f.input :end_time
+    = f.association :conference_number
+    = f.association :provider
+    = f.association :patient
+
+  .form-actions
+    = f.button :submit
