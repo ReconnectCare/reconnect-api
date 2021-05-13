@@ -24,12 +24,16 @@ header.container.mx-auto
             | &nbsp;Dashboard
 
           li class="p-2 border-b border-solid lg:border-none" = link_to conference_numbers_path do
-            i.fas.fa-tachometer-alt
+            i.fas.fa-phone-alt
             | &nbsp;Conference Numbers
 
           li class="p-2 border-b border-solid lg:border-none" = link_to providers_path do
-            i.fas.fa-tachometer-alt
-            | &nbsp;Provider
+            i.fas.fa-user-md
+            | &nbsp;Providers
+
+          li class="p-2 border-b border-solid lg:border-none" = link_to patients_path do
+            i.fas.fa-user
+            | &nbsp;Patients
 
           li class="p-2 border-b border-solid lg:border-none" = link_to "/admin/sidekiq", target: "_blank" do
             i.fas.fa-atom

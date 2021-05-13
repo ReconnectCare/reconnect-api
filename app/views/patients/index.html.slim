@@ -1,0 +1,47 @@
+h1 Listing patients
+
+table
+  thead
+    tr
+      th External
+      th First name
+      th Middle name
+      th Last name
+      th Date of birth
+      th Gender
+      th Office phone
+      th Cell phone
+      th Email
+      th Street
+      th Street 2
+      th City
+      th State
+      th Zipcode
+      th
+      th
+      th
+
+  tbody
+    - @patients.each do |patient|
+      tr
+        td = patient.external_id
+        td = patient.first_name
+        td = patient.middle_name
+        td = patient.last_name
+        td = patient.date_of_birth
+        td = patient.gender
+        td = patient.office_phone
+        td = patient.cell_phone
+        td = patient.email
+        td = patient.street
+        td = patient.street_2
+        td = patient.city
+        td = patient.state
+        td = patient.zipcode
+        td = link_to 'Show', patient
+        td = link_to 'Edit', edit_patient_path(patient)
+        td = link_to 'Destroy', patient, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Patient', new_patient_path

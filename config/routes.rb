@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :patients
   resources :providers
   resources :conference_numbers
   devise_for :users

@@ -1,0 +1,22 @@
+= simple_form_for(@patient) do |f|
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .form-inputs
+    = f.input :external_id
+    = f.input :first_name
+    = f.input :middle_name
+    = f.input :last_name
+    = f.input :date_of_birth
+    = f.input :gender
+    = f.input :office_phone
+    = f.input :cell_phone
+    = f.input :email
+    = f.input :street
+    = f.input :street_2
+    = f.input :city
+    = f.input :state
+    = f.input :zipcode
+
+  .form-actions
+    = f.button :submit
