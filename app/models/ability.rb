@@ -37,6 +37,7 @@ class Ability
 
   def user user
     can :show, :dashboard
+    can :manage, :all
   end
 
   def admin user

@@ -22,6 +22,11 @@ header.container.mx-auto
           li class="p-2 border-b border-solid lg:border-none" = link_to dashboard_url do
             i.fas.fa-tachometer-alt
             | &nbsp;Dashboard
+
+          li class="p-2 border-b border-solid lg:border-none" = link_to conference_numbers_path do
+            i.fas.fa-tachometer-alt
+            | &nbsp;Conference Numbers
+
           li class="p-2 border-b border-solid lg:border-none" = link_to "/admin/sidekiq", target: "_blank" do
             i.fas.fa-atom
             | &nbsp;Sidekiq
