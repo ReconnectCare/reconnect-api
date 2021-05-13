@@ -1,0 +1,18 @@
+p#notice = notice
+
+p
+  strong External:
+  = @provider.external_id
+p
+  strong Name:
+  = @provider.name
+p
+  strong Phy code:
+  = @provider.phy_code
+p
+  strong Cell phone:
+  = @provider.cell_phone
+
+=> link_to 'Edit', edit_provider_path(@provider)
+'|
+=< link_to 'Back', providers_path

@@ -27,6 +27,10 @@ header.container.mx-auto
             i.fas.fa-tachometer-alt
             | &nbsp;Conference Numbers
 
+          li class="p-2 border-b border-solid lg:border-none" = link_to providers_path do
+            i.fas.fa-tachometer-alt
+            | &nbsp;Provider
+
           li class="p-2 border-b border-solid lg:border-none" = link_to "/admin/sidekiq", target: "_blank" do
             i.fas.fa-atom
             | &nbsp;Sidekiq

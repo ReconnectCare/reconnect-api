@@ -1,0 +1,27 @@
+h1 Listing providers
+
+table
+  thead
+    tr
+      th External
+      th Name
+      th Phy code
+      th Cell phone
+      th
+      th
+      th
+
+  tbody
+    - @providers.each do |provider|
+      tr
+        td = provider.external_id
+        td = provider.name
+        td = provider.phy_code
+        td = provider.cell_phone
+        td = link_to 'Show', provider
+        td = link_to 'Edit', edit_provider_path(provider)
+        td = link_to 'Destroy', provider, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Provider', new_provider_path
