@@ -1,9 +1,4 @@
 Rails.application.routes.draw do
-  resources :conferences
-  resources :patients
-  resources :providers
-  resources :conference_numbers
-  devise_for :users
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   namespace :admin do
@@ -12,6 +7,13 @@ Rails.application.routes.draw do
       mount Sidekiq::Web => "/sidekiq"
     end
   end
+
+  resources :conferences
+  resources :patients
+  resources :providers
+  resources :conference_numbers
+
+  devise_for :users
 
   get :dashboard, to: "dashboard#index", as: :dashboard
 
