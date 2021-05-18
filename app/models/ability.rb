@@ -37,6 +37,10 @@ class Ability
 
   def user user
     can :show, :dashboard
+    can :read, :dashboard
+    can :read, :me
+    can :create, ApiToken
+    can :manage, ApiToken, user_id: user.id
     can :manage, :all
   end
 

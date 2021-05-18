@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
+  #### ADMIN ####
   namespace :admin do
     authenticate :user, lambda { |u| u.admin? } do
       require "sidekiq/web"
@@ -8,12 +9,28 @@ Rails.application.routes.draw do
     end
   end
 
+  #### ROUTES ####
   resources :conferences
   resources :patients
   resources :providers
   resources :conference_numbers
+  resources :api_tokens
 
   devise_for :users
+
+  #### API ####
+  namespace :api do
+    get "status", to: "api#status"
+    api_version(
+      module: "V1",
+      header: {name: "Accept", value: "application/api.rails-starter-6.com; version=1"},
+      path: {value: "v1"},
+      default: true
+    ) do
+      resource :auth, only: [:create]
+      resource :me, controller: :me
+    end
+  end
 
   get :dashboard, to: "dashboard#index", as: :dashboard
 

@@ -146,6 +146,7 @@ GEM
     jaro_winkler (1.5.4)
     jbuilder (2.11.2)
       activesupport (>= 5.0.0)
+    jwt (2.2.2)
     kramdown (2.3.1)
       rexml
     kramdown-parser-gfm (1.1.0)
@@ -323,6 +324,10 @@ GEM
     unf_ext (0.0.7.7)
     unicode-display_width (2.0.0)
     vcr (6.0.0)
+    versionist (2.0.1)
+      activesupport (>= 3)
+      railties (>= 3)
+      yard (~> 0.9.20)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.1.0)
@@ -362,6 +367,7 @@ DEPENDENCIES
   image_processing (~> 1.2)
   inky-rb
   jbuilder (~> 2.7)
+  jwt
   listen (~> 3.2, >= 3.2.1)
   pagy
   pg (>= 0.18, < 2.0)
@@ -379,6 +385,7 @@ DEPENDENCIES
   standard
   tzinfo-data
   vcr
+  versionist
   web-console (>= 3.3.0)
   webmock
   webpacker (~> 5.0)

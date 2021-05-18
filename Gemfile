@@ -34,12 +34,14 @@ gem "pagy"
 # Authentication
 gem "devise"
 gem "cancancan", "~> 3.0"
+gem "jwt"
 
 # DevOps
 gem "exception_notification"
 
 # Utils / API
 gem "http"
+gem "versionist"
 
 # Emails
 gem "inky-rb", require: "inky"

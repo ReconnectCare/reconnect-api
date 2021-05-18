@@ -39,9 +39,15 @@ header.container.mx-auto
             i.fas.fa-user
             | &nbsp;Patients
 
-          li class="p-2 border-b border-solid lg:border-none" = link_to "/admin/sidekiq", target: "_blank" do
+          - if current_user.admin?
+            li class="p-2 border-b border-solid lg:border-none" = link_to "/admin/sidekiq", target: "_blank" do
+              i.fas.fa-atom
+              | &nbsp;Sidekiq
+
+          li class="p-2 border-b border-solid lg:border-none" = link_to api_tokens_path do
             i.fas.fa-atom
-            | &nbsp;Sidekiq
+            | &nbsp;API Tokens
+
           li class="p-2 border-b border-solid lg:border-none" =< link_to edit_user_registration_path do
             img class="rounded-full inline" src=current_user.gravitar_url(32)
             =< current_user.first_name

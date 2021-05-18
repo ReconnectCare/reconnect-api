@@ -26,10 +26,16 @@ class User < ApplicationRecord
     end
   end
 
+  has_many :api_tokens
+
   def gravitar_url size = 64, default = "mg"
     email_address = email.downcase
     hash = Digest::MD5.hexdigest(email_address)
 
     "https://www.gravatar.com/avatar/#{hash}?s=#{size}&d=#{default}"
+  end
+
+  def to_s
+    email
   end
 end
