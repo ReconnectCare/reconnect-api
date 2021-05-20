@@ -98,6 +98,15 @@ GEM
     factory_bot_rails (6.1.0)
       factory_bot (~> 6.1.0)
       railties (>= 5.0.0)
+    faraday (1.4.1)
+      faraday-excon (~> 1.1)
+      faraday-net_http (~> 1.0)
+      faraday-net_http_persistent (~> 1.1)
+      multipart-post (>= 1.2, < 3)
+      ruby2_keywords (>= 0.0.4)
+    faraday-excon (1.1.0)
+    faraday-net_http (1.0.1)
+    faraday-net_http_persistent (1.1.0)
     ffi (1.15.0)
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
@@ -167,6 +176,7 @@ GEM
     mini_portile2 (2.5.1)
     minitest (5.14.4)
     msgpack (1.4.2)
+    multipart-post (2.1.1)
     nenv (0.3.0)
     nio4r (2.5.7)
     nokogiri (1.11.3)
@@ -181,6 +191,10 @@ GEM
     parser (3.0.1.1)
       ast (~> 2.4.1)
     pg (1.2.3)
+    phony (2.18.22)
+    phony_rails (0.15.0)
+      activesupport (>= 3.0)
+      phony (>= 2.18.12)
     premailer (1.14.3)
       addressable
       css_parser (>= 1.6.0)
@@ -256,6 +270,7 @@ GEM
     ruby-progressbar (1.11.0)
     ruby-vips (2.1.2)
       ffi (~> 1.12)
+    ruby2_keywords (0.0.4)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
     sassc (2.4.0)
@@ -317,6 +332,10 @@ GEM
     tilt (2.0.10)
     turbo-rails (0.5.9)
       rails (>= 6.0.0)
+    twilio-ruby (5.53.0)
+      faraday (>= 0.9, < 2.0)
+      jwt (>= 1.5, <= 2.5)
+      nokogiri (>= 1.6, < 2.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     unf (0.1.4)
@@ -371,6 +390,7 @@ DEPENDENCIES
   listen (~> 3.2, >= 3.2.1)
   pagy
   pg (>= 0.18, < 2.0)
+  phony_rails
   premailer-rails
   puma (~> 5.2)
   rails (~> 6.1.0)
@@ -383,6 +403,7 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   standard
+  twilio-ruby
   tzinfo-data
   vcr
   versionist

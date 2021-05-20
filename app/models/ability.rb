@@ -39,6 +39,7 @@ class Ability
     can :show, :dashboard
     can :read, :dashboard
     can :read, :me
+    can :read, TextMessage
     can :create, ApiToken
     can :manage, ApiToken, user_id: user.id
     can :manage, :all

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_17_233114) do
+ActiveRecord::Schema.define(version: 2021_05_18_215410) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -105,6 +105,19 @@ ActiveRecord::Schema.define(version: 2021_05_17_233114) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "text_messages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "provider_id", null: false
+    t.string "direction", null: false
+    t.string "status", null: false
+    t.string "body"
+    t.string "error_code"
+    t.string "number", null: false
+    t.uuid "conference_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["conference_id"], name: "index_text_messages_on_conference_id"
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -138,4 +151,5 @@ ActiveRecord::Schema.define(version: 2021_05_17_233114) do
   add_foreign_key "conferences", "conference_numbers"
   add_foreign_key "conferences", "patients"
   add_foreign_key "conferences", "providers"
+  add_foreign_key "text_messages", "conferences"
 end

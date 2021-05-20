@@ -42,6 +42,8 @@ gem "exception_notification"
 # Utils / API
 gem "http"
 gem "versionist"
+gem "twilio-ruby"
+gem "phony_rails"
 
 # Emails
 gem "inky-rb", require: "inky"

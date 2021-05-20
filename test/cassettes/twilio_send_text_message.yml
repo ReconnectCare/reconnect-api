@@ -1,0 +1,73 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.twilio.com/2010-04-01/Accounts/AC13816613a08b39cfa7b42ee9505fa77d/Messages.json
+    body:
+      encoding: UTF-8
+      string: Body=test+text+message&From=%2B18632041633&StatusCallback=https%3A%2F%2Fcandland.ngrok.io%2Fhooks%2Ftexts%2F7e6dad88-b1f9-408d-bdef-672dfb39f858&To=%2B13038752721
+    headers:
+      User-Agent:
+      - twilio-ruby/5.53.0 (ruby/x86_64-darwin19 2.7.1-p83)
+      Accept-Charset:
+      - utf-8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept:
+      - application/json
+      Authorization:
+      - Basic QUMxMzgxNjYxM2EwOGIzOWNmYTdiNDJlZTk1MDVmYTc3ZDozZmI4ODY3ZTc1ZTliMTFmZDgyZDgxOWU1MDdlMjY0ZQ==
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Wed, 19 May 2021 17:45:59 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '781'
+      Connection:
+      - keep-alive
+      Twilio-Concurrent-Requests:
+      - '1'
+      Twilio-Request-Id:
+      - RQ62ee6c4688b502dd5fb85e0a3b49fe11
+      Twilio-Request-Duration:
+      - '0.141'
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - Accept, Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match,
+        If-Unmodified-Since
+      Access-Control-Allow-Methods:
+      - GET, POST, DELETE, OPTIONS
+      Access-Control-Expose-Headers:
+      - ETag
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Powered-By:
+      - AT-5000
+      X-Shenanigans:
+      - none
+      X-Home-Region:
+      - us1
+      X-Api-Domain:
+      - api.twilio.com
+      Strict-Transport-Security:
+      - max-age=31536000
+    body:
+      encoding: UTF-8
+      string: '{"sid": "SM1e199f963e96497ba17cd6df6709ce9a", "date_created": "Wed,
+        19 May 2021 17:45:59 +0000", "date_updated": "Wed, 19 May 2021 17:45:59 +0000",
+        "date_sent": null, "account_sid": "AC13816613a08b39cfa7b42ee9505fa77d", "to":
+        "+13038752721", "from": "+18632041633", "messaging_service_sid": null, "body":
+        "test text message", "status": "queued", "num_segments": "1", "num_media":
+        "0", "direction": "outbound-api", "api_version": "2010-04-01", "price": null,
+        "price_unit": "USD", "error_code": null, "error_message": null, "uri": "/2010-04-01/Accounts/AC13816613a08b39cfa7b42ee9505fa77d/Messages/SM1e199f963e96497ba17cd6df6709ce9a.json",
+        "subresource_uris": {"media": "/2010-04-01/Accounts/AC13816613a08b39cfa7b42ee9505fa77d/Messages/SM1e199f963e96497ba17cd6df6709ce9a/Media.json"}}'
+  recorded_at: Wed, 19 May 2021 17:45:59 GMT
+recorded_with: VCR 6.0.0

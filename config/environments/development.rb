@@ -73,6 +73,7 @@ Rails.application.configure do
 
   config.hosts << "reconnect-api.test"
   config.hosts << "localhost:3000"
+  config.hosts << "candland.ngrok.io"
 
   config.active_job.queue_adapter = :sidekiq
 

@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   resources :providers
   resources :conference_numbers
   resources :api_tokens
+  resources :text_messages, only: [:index, :show]
 
   devise_for :users
 
@@ -30,6 +31,18 @@ Rails.application.routes.draw do
       resource :auth, only: [:create]
       resource :me, controller: :me
     end
+  end
+
+  #### External Hooks ####
+  namespace :hooks do
+    # post "texts", to: "texts#create"
+    post "texts/:id", to: "texts#status", as: :text_status
+    post "voice", to: "voice#create"
+    post "voice/status", to: "voice#status", as: :voice_status
+    post "voice/:id/respond", to: "voice#respond", as: :voice_respond
+    post "voice/:id/recorded", to: "voice#recorded", as: :voice_recorded
+    post "voice/:id/transcribed", to: "voice#transcribed", as: :voice_transcribed
+    post "voice/:id/hangup", to: "voice#hangup", as: :voice_hangup
   end
 
   get :dashboard, to: "dashboard#index", as: :dashboard
