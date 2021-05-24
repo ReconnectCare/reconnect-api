@@ -1,7 +1,7 @@
 require "test_helper"
 
 class ConferenceNumberTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test "#first_available" do
+    assert false, "IMPL"
+  end
 end

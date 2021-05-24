@@ -24,7 +24,7 @@ class SendTextMessageWorker < ApplicationWorker
 
     text_message.provider_id = message.sid
     text_message.status = message.status
-    text_message.save
+    text_message.save!
   end
 
   def twilio

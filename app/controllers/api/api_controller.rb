@@ -15,7 +15,12 @@ class Api::ApiController < ActionController::API
     redirect_to root_url, alert: exception.message
   end
 
-  rescue_from StandardError, with: :standard_error
+  rescue_from Exceptions::ApiDataError do |e|
+    render status: e.status, json: {message: e.message, errors: e.errors}
+  end
+
+  # Catches everything
+  # rescue_from StandardError, with: :standard_error
 
   check_authorization
   skip_authorization_check only: [:status]

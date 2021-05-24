@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     ) do
       resource :auth, only: [:create]
       resource :me, controller: :me
+      resources :conferences, only: [:create]
     end
   end
 
