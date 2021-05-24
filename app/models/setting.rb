@@ -24,4 +24,9 @@ class Setting < ApplicationRecord
       ActiveModel::Type::Boolean.new.cast(setting.value)
     end
   end
+
+  def self.render value, vars = {}
+    # create and run templates, filling member data variables
+    ERB.new(value, trim_mode: nil, eoutvar: "@result").result_with_hash(vars)
+  end
 end

@@ -30,4 +30,10 @@ class SettingTest < ActiveSupport::TestCase
   test "a default" do
     assert_equal "my string", Setting.get(:test, "my string")
   end
+
+  test "render" do
+    out = Setting.render("some <%= myValue %> here", {myValue: "bad case"})
+
+    assert_equal "some bad case here", out
+  end
 end

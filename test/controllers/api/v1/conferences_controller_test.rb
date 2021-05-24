@@ -37,8 +37,9 @@ class ConferencesControllerTest < ActionDispatch::IntegrationTest
     assert Patient.find_by(external_id: params.dig(:patient, :external_id))
 
     assert_equal "+13035550000", response.parsed_body.dig("conference_number", "number")
+
     # TODO: check rest of json pp response.parsed_body
-    #
+
     conference = Conference.order(created_at: :asc).last
 
     assert_equal "my_external_id", conference.external_id

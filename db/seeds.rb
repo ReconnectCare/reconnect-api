@@ -5,13 +5,28 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-user_base = {
+user_base = [{
   first_name: "Dusty",
   last_name: "Candland",
   password: "password",
   password_confirmation: "password",
-}
+  email: "candland@gmail.com",
+  confirmed_at: DateTime.now,
+  roles: [:user, :admin]
+}]
 
-User.create([
-  user_base.merge({email: "candland@gmail.com", confirmed_at: DateTime.now, roles: [:user, :admin]}),
-])
+user_base.each do |user_data|
+  User.find_or_create_by(email: user_data[:email]) do |user|
+    user.update(user_data)
+  end
+end
+
+Setting.find_or_create_by(name: "providers_to_attempt") do |s|
+  s.value = 2
+  s.value_type = Setting::VALUE_TYPES.integer
+end
+
+Setting.find_or_create_by(name: "provider_text_message") do |s|
+  s.value = "Need to get content for this."
+  s.value_type = Setting::VALUE_TYPES.string
+end

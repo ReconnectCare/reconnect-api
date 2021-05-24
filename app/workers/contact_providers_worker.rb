@@ -3,10 +3,12 @@ class ContactProvidersWorker
 
   def perform(conference_id, providers_json)
     # TODO Send SMS to X random available providers
+    providers_to_attempt = Setting.get("providers_to_attempt", 2)
+
     conference = Conference.find(conference_id)
 
-    # TODO move this content to system settings object
-    body = "New patient is ready for a consult. Call #{conference.conference_number.number}."
+    provider_text_message = Setting.get("provider_text_message", "default text to providers")
+    body = Setting.render(provider_text_message, {conference: conference})
 
     text_message = TextMessage.new(
       conference_id: conference_id,
