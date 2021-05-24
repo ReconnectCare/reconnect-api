@@ -10,6 +10,7 @@ class ConferencesControllerTest < ActionDispatch::IntegrationTest
     user = token.user
 
     params = {
+      patient: {bad: :param}
     }
     post api_v1_conferences_url, headers: {Authorization: "Bearer #{user.api_tokens.first.token}"}, params: params
 
@@ -22,7 +23,10 @@ class ConferencesControllerTest < ActionDispatch::IntegrationTest
     token = create(:api_token)
     user = token.user
 
-    params = attributes_for(:patient)
+    params = {
+      external_id: "my_external_id",
+      patient: attributes_for(:patient)
+    }
 
     assert_difference("Conference.count") do
       post api_v1_conferences_url, headers: {Authorization: "Bearer #{user.api_tokens.first.token}"}, params: params
@@ -30,10 +34,14 @@ class ConferencesControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
 
-    assert Patient.find_by(external_id: params[:external_id])
+    assert Patient.find_by(external_id: params.dig(:patient, :external_id))
 
     assert_equal "+13035550000", response.parsed_body.dig("conference_number", "number")
     # TODO: check rest of json pp response.parsed_body
+    #
+    conference = Conference.order(created_at: :asc).last
+
+    assert_equal "my_external_id", conference.external_id
   end
 
   test "create - existing patient" do

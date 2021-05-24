@@ -18,14 +18,14 @@ class Api::V1::ConferencesController < Api::ApiController
     @conference = Conference.new(
       start_time: DateTime.now,
       patient: @patient,
-      conference_number: conference_number
+      conference_number: conference_number,
+      external_id: conference_params[:external_id]
     )
 
     # TODO: check for available providers, error if none available (API call) -> Dump to worker
     providers = {}
 
     if @conference.save
-      # TODO: worker to text available providers
       ContactProvidersWorker.perform_async(@conference.id, providers)
       render :show
     else
@@ -35,9 +35,11 @@ class Api::V1::ConferencesController < Api::ApiController
 
   private
 
-  # TODO: add external_id
+  def conference_params
+    params.permit(:external_id)
+  end
 
   def patient_params
-    params.permit(:external_id, :first_name, :middle_name, :last_name, :date_of_birth, :gender, :office_phone, :cell_phone, :email, :street, :street_2, :city, :state, :zipcode)
+    params.require(:patient).permit(:external_id, :first_name, :middle_name, :last_name, :date_of_birth, :gender, :office_phone, :cell_phone, :email, :street, :street_2, :city, :state, :zipcode)
   end
 end
