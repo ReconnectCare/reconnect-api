@@ -1,0 +1,13 @@
+p
+  strong Name:
+  = @setting.name
+p
+  strong Value:
+  = @setting.value
+p
+  strong Value type:
+  = @setting.value_type
+
+=> link_to 'Edit', edit_setting_path(@setting)
+'|
+=< link_to 'Back', settings_path

@@ -48,6 +48,10 @@ header.container.mx-auto
                 i.fas.fa-sms
                 | &nbsp;Text Messages
 
+              li class="p-2 border-b border-solid lg:border-none" = link_to settings_path do
+                i.fas.fa-cogs
+                | &nbsp;System Settings
+
 
           li class="p-2 border-b border-solid lg:border-none relative" data-controller="dropdown-menu"
             =< link_to edit_user_registration_path do
