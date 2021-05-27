@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_24_222348) do
+ActiveRecord::Schema.define(version: 2021_05_27_170558) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -73,9 +73,12 @@ ActiveRecord::Schema.define(version: 2021_05_24_222348) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "external_id"
+    t.jsonb "contestants", default: [], null: false
+    t.string "status", default: "ready", null: false
     t.index ["conference_number_id"], name: "index_conferences_on_conference_number_id"
     t.index ["patient_id"], name: "index_conferences_on_patient_id"
     t.index ["provider_id"], name: "index_conferences_on_provider_id"
+    t.index ["status"], name: "index_conferences_on_status"
   end
 
   create_table "patients", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -154,6 +157,17 @@ ActiveRecord::Schema.define(version: 2021_05_24_222348) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "voice_calls", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "provider_id", null: false
+    t.uuid "conference_id", null: false
+    t.string "direction", null: false
+    t.string "status", null: false
+    t.string "number", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["conference_id"], name: "index_voice_calls_on_conference_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "api_tokens", "users"
@@ -161,4 +175,5 @@ ActiveRecord::Schema.define(version: 2021_05_24_222348) do
   add_foreign_key "conferences", "patients"
   add_foreign_key "conferences", "providers"
   add_foreign_key "text_messages", "conferences"
+  add_foreign_key "voice_calls", "conferences"
 end

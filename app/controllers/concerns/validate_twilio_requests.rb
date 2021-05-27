@@ -14,7 +14,6 @@ module ValidateTwilioRequests
 
       unless is_valid
         Rails.logger.debug "\n\nURL: #{url}"
-        Rails.logger.debug twilio_params.inspect
         twilio_params.each do |k, v|
           Rails.logger.debug "    #{k} = #{v}"
         end

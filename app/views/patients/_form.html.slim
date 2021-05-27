@@ -8,7 +8,7 @@
     = f.input :middle_name
     = f.input :last_name
     = f.input :date_of_birth
-    = f.input :gender
+    = f.input :gender, collection: Patient::GENDER.to_h
     = f.input :office_phone
     = f.input :cell_phone
     = f.input :email

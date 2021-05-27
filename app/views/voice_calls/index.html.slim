@@ -1,0 +1,29 @@
+h1 Listing voice_calls
+
+table
+  thead
+    tr
+      th Provider
+      th Conference
+      th Direction
+      th Status
+      th Number
+      th
+      th
+      th
+
+  tbody
+    - @voice_calls.each do |voice_call|
+      tr
+        td = voice_call.provider_id
+        td = voice_call.conference
+        td = voice_call.direction
+        td = voice_call.status
+        td = voice_call.number
+        td = link_to 'Show', voice_call
+        td = link_to 'Edit', edit_voice_call_path(voice_call)
+        td = link_to 'Destroy', voice_call, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Voice call', new_voice_call_path

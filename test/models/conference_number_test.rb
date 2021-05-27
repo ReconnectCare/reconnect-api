@@ -2,6 +2,6 @@ require "test_helper"
 
 class ConferenceNumberTest < ActiveSupport::TestCase
   test "#first_available" do
-    assert false, "IMPL"
+    fail "IMPL"
   end
 end
