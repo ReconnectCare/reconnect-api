@@ -1,4 +1,4 @@
-== render "shared/page_header", title: "Patients" do
+== render "shared/page_header", title: "Patients", icon: "fa-user" do
   =< link_to 'New Patient', new_patient_path
 
 .panel
@@ -22,7 +22,7 @@
           td = patient.gender
           td = patient.cell_phone.phony_formatted
           td = patient.email
-          td.text-right
+          td.actions
             =< link_to 'Show', patient
             =< link_to 'Edit', edit_patient_path(patient)
             =< link_to 'Destroy', patient, data: { confirm: 'Are you sure?' }, method: :delete

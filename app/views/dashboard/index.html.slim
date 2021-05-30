@@ -1,4 +1,36 @@
-== render "shared/page_header", title: "Dashboard"
+== render "shared/page_header", title: "Dashboard", icon: "fa-tachometer-alt"
 
 .panel
-  h2 TODO
+  .flex.flex-row.justify-between.mb-4
+    == render 'shared/stat', label: "Available Numbers" do
+      => @available_numbers
+      | /
+      =< @conference_number_count
+
+    == render 'shared/stat', label: "Active Conferences" do
+      => @active_conferences.count
+      | /
+      =< @conferences_count
+
+    == render 'shared/stat', label: "Providers" do
+      = @providers_count
+
+    == render 'shared/stat', label: "Patients" do
+      = @patients_count
+
+  #active
+    .section-header.flex.flex-wrap.pb-2.pt-4.items-end.border-b.border-gray-300.mb-3
+      div class="flex-initial"
+        h3 class="pb-0"
+          .text-xl.text-gray-800.font-bold.inline
+            | Active Conferences
+
+      div class="flex-auto"
+        nav.flex.flex-row.justify-end
+          = link_to "Conferences", conferences_path
+
+    - if @active_conferences
+      == render "conferences/table", conferences: @active_conferences
+    - else
+      p.p-8.text-center
+        | No Active Conferences

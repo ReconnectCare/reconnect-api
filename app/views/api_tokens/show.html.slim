@@ -1,21 +1,20 @@
-p#notice = notice
+== render "shared/page_header", title: "API Token" do
+  =< link_to 'Edit', edit_api_token_path(@api_token)
+  =< link_to 'Back', api_tokens_path
 
-p
-  strong User:
-  = @api_token.user
-p
-  strong Name:
-  = @api_token.name
-p
-  strong Token:
-  = @api_token.token
-p
-  strong Deleted at:
-  = @api_token.deleted_at
-p
-  strong Calls:
-  = @api_token.calls
-
-=> link_to 'Edit', edit_api_token_path(@api_token)
-'|
-=< link_to 'Back', api_tokens_path
+.panel
+  p
+    strong User:
+    = @api_token.user
+  p
+    strong Name:
+    = @api_token.name
+  p
+    strong Token:
+    = @api_token.token
+  p
+    strong Deleted at:
+    = @api_token.deleted_at
+  p
+    strong Calls:
+    = @api_token.calls

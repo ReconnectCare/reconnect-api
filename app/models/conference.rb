@@ -21,6 +21,10 @@ class Conference < ApplicationRecord
     joins(:conference_number).where(status: [:ready, :waiting]).where("conference_numbers.number = ?", number).where("conferences.end_time IS NULL")
   }
 
+  scope :active_conferences, -> {
+    where.not(status: "completed")
+  }
+
   def to_s
     start_time.to_s
   end

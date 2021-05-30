@@ -1,4 +1,4 @@
-== render "shared/page_header", title: "Providers" do
+== render "shared/page_header", title: "Providers", icon: "fa-user-md" do
   =< link_to 'New Provider', new_provider_path
 
 .panel
@@ -18,7 +18,7 @@
           td = provider.name
           td = provider.phy_code
           td = provider.cell_phone.phony_formatted
-          td.text-right
+          td.actions
             =< link_to 'Show', provider
             =< link_to 'Edit', edit_provider_path(provider)
             =< link_to 'Destroy', provider, data: { confirm: 'Are you sure?' }, method: :delete

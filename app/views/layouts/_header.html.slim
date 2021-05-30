@@ -1,9 +1,9 @@
-header.container.mx-auto
+header.container-full.mx-auto.bg-gray-900.shadow
 
   nav.flex.flex-wrap.justify-between.items-baseline
     .flex-shrink
-      a href="/"
-        =image_pack_tag("logo.svg", style: "height: 32px;", alt: "Reconnect Api Logo")
+      a.px-4.text-gray-100.text-2xl href=root_path ReconnectCare
+      / =image_pack_tag("logo.svg", style: "height: 32px;", alt: "Reconnect Api Logo")
 
     div class="p-4 block lg:hidden" data-menu="navbarHeader"
       button class="flex items-center px-3 py-2 border rounded text-teal-lighter border-teal-light hover:text-white hover:border-white"
@@ -13,7 +13,7 @@ header.container.mx-auto
 
     #navbarHeader class="hidden w-full lg:w-auto block pt-5 lg:flex collapse navbar-collapse"
       ul class="flex flex-col lg:flex-row justify-start lg:justify-end ml-auto.border-t border-solid lg:border-none lg:items-baseline"
-        - if user_signed_in?
+        - if user_signed_in? and Rails.env.development?
           li class="hidden p-2 border-b border-solid lg:border-none lg:block"
             - @current_user.roles.each do |role|
               span.rounded.bg-green-200.text-green-600.text-xs.py-1.px-3.pr-2 => role
@@ -26,7 +26,7 @@ header.container.mx-auto
             svg.inline.w-4.h-4 height="1rem" viewbox=("0 0 20 20") width="1rem" xmlns="http://www.w3.org/2000/svg"
               path d=("M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z")
 
-            ul class="absolute shadow origin-top-right right-0 whitespace-nowrap p-0 transform transition ease-in-out duration-500 opacity-0 hidden bg-white"
+            ul class="absolute shadow origin-top-right right-0 whitespace-nowrap p-0 transform transition ease-in-out duration-500 opacity-0 hidden bg-gray-900 mr-4"
 
               li class="p-2 border-b border-solid lg:border-none" = link_to conference_numbers_path do
                 i.fas.fa-phone-alt
@@ -64,10 +64,10 @@ header.container.mx-auto
               svg.inline.w-4.h-4 height="1rem" viewbox=("0 0 20 20") width="1rem" xmlns="http://www.w3.org/2000/svg"
                 path d=("M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z")
 
-            ul class="absolute shadow origin-top-right right-0 whitespace-nowrap p-0 transform transition ease-in-out duration-500 opacity-0 hidden bg-white"
+            ul class="absolute shadow origin-top-right right-0 whitespace-nowrap p-0 transform transition ease-in-out duration-500 opacity-0 hidden bg-gray-900 mr-4"
 
               li class="p-2 border-b border-solid lg:border-none" = link_to api_tokens_path do
-                i.fas.fa-atom
+                i.fas.fa-key
                 | &nbsp;API Tokens
 
               - if current_user.admin?

@@ -1,8 +1,6 @@
-h1 Editing api_token
+== render "shared/page_header", title: "Edit API Token" do
+  =< link_to 'Show', @api_token
+  =< link_to 'Back', api_tokens_path
 
-== render 'form'
-
-=> link_to 'Show', @api_token
-'|
-=< link_to 'Back', api_tokens_path
-
+.panel
+  == render 'form'

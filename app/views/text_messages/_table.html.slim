@@ -20,4 +20,5 @@ table.table
         td = text_message.error_code
         td = text_message.number.phony_formatted
         td = text_message.created_at.to_formatted_s(:long)
-        td.text-right = link_to 'Show', text_message
+        td.actions
+          = link_to 'Show', text_message

@@ -1,29 +1,28 @@
-h1 Listing api_tokens
+== render "shared/page_header", title: "API Tokens", icon: "fa-key" do
+  =< link_to 'New Api token', new_api_token_path
 
-table
-  thead
-    tr
-      th User
-      th Name
-      th Token
-      th Deleted at
-      th Calls
-      th
-      th
-      th
-
-  tbody
-    - @api_tokens.each do |api_token|
+.panel
+  table.table
+    thead
       tr
-        td = api_token.user
-        td = api_token.name
-        td = api_token.token
-        td = api_token.deleted_at
-        td = api_token.calls
-        td = link_to 'Show', api_token
-        td = link_to 'Edit', edit_api_token_path(api_token)
-        td = link_to 'Destroy', api_token, data: { confirm: 'Are you sure?' }, method: :delete
+        th User
+        th Name
+        th Token
+        th Deleted at
+        th Calls
+        th
 
-br
-
-= link_to 'New Api token', new_api_token_path
+    tbody
+      - @api_tokens.each do |api_token|
+        tr
+          td = api_token.user
+          td = api_token.name
+          td = api_token.token.truncate(40)
+          td
+            - if api_token.deleted_at
+              = api_token.deleted_at.to_formatted_s(:long)
+          td = api_token.calls
+          td.actions
+            =< link_to 'Show', api_token
+            =< link_to 'Edit', edit_api_token_path(api_token)
+            =< link_to 'Destroy', api_token, data: { confirm: 'Are you sure?' }, method: :delete
