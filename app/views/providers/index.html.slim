@@ -1,27 +1,26 @@
-h1 Listing providers
+== render "shared/page_header", title: "Providers" do
+  =< link_to 'New Provider', new_provider_path
 
-table
-  thead
-    tr
-      th External
-      th Name
-      th Phy code
-      th Cell phone
-      th
-      th
-      th
-
-  tbody
-    - @providers.each do |provider|
+.panel
+  table.table
+    thead
       tr
-        td = provider.external_id
-        td = provider.name
-        td = provider.phy_code
-        td = provider.cell_phone
-        td = link_to 'Show', provider
-        td = link_to 'Edit', edit_provider_path(provider)
-        td = link_to 'Destroy', provider, data: { confirm: 'Are you sure?' }, method: :delete
+        th External
+        th Name
+        th Phy code
+        th Cell phone
+        th
 
-br
+    tbody
+      - @providers.each do |provider|
+        tr
+          td = provider.external_id
+          td = provider.name
+          td = provider.phy_code
+          td = provider.cell_phone.phony_formatted
+          td.text-right
+            =< link_to 'Show', provider
+            =< link_to 'Edit', edit_provider_path(provider)
+            =< link_to 'Destroy', provider, data: { confirm: 'Are you sure?' }, method: :delete
 
-= link_to 'New Provider', new_provider_path
+  == pagy_nav(@pagy)

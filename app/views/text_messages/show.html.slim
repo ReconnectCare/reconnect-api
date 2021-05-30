@@ -1,23 +1,25 @@
-p
-  strong Provider:
-  = @text_message.provider_id
-p
-  strong Direction:
-  = @text_message.direction
-p
-  strong Status:
-  = @text_message.status
-p
-  strong Body:
-  = @text_message.body
-p
-  strong Error code:
-  = @text_message.error_code
-p
-  strong Number:
-  = @text_message.number
-p
-  strong Conference:
-  = @text_message.conference
+== render "shared/page_header", title: "Text Message" do
+  =< link_to 'Back', text_messages_path
 
-=< link_to 'Back', text_messages_path
+.panel
+  p
+    strong Provider:
+    = @text_message.provider_id
+  p
+    strong Direction:
+    = @text_message.direction
+  p
+    strong Status:
+    = @text_message.status
+  p
+    strong Body:
+    = @text_message.body
+  p
+    strong Error code:
+    = @text_message.error_code
+  p
+    strong Number:
+    = @text_message.number
+  p
+    strong Conference:
+    = @text_message.conference

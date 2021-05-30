@@ -1,24 +1,23 @@
-p#notice = notice
+== render "shared/page_header", title: "Voice Call" do
+  =< link_to 'Edit', edit_voice_call_path(@voice_call)
+  =< link_to 'Back', voice_calls_path
 
-p
-  strong Provider:
-  = @voice_call.provider_id
-p
-  strong Conference:
-  = @voice_call.conference
-p
-  strong Direction:
-  = @voice_call.direction
-p
-  strong Status:
-  = @voice_call.status
-p
-  strong Number:
-  = @voice_call.number
-p
-  strong Reason:
-  = @voice_call.reason
-
-=> link_to 'Edit', edit_voice_call_path(@voice_call)
-'|
-=< link_to 'Back', voice_calls_path
+.panel
+  p
+    strong Provider:
+    = @voice_call.provider_id
+  p
+    strong Conference:
+    = @voice_call.conference
+  p
+    strong Direction:
+    = @voice_call.direction
+  p
+    strong Status:
+    = @voice_call.status
+  p
+    strong Number:
+    = @voice_call.number
+  p
+    strong Reason:
+    = @voice_call.reason

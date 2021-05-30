@@ -1,4 +1,4 @@
-table
+table.table
   thead
     tr
       th Provider
@@ -7,19 +7,22 @@ table
       th Status
       th Reason
       th Number
-      th
-      th
+      th Created
       th
 
   tbody
     - voice_calls.each do |voice_call|
       tr
         td = voice_call.provider_id
-        td = voice_call.conference
+        td
+          - if voice_call.conference
+            = link_to voice_call.conference, voice_call.conference
         td = voice_call.direction
         td = voice_call.status
         td = voice_call.reason
-        td = voice_call.number
-        td = link_to 'Show', voice_call
-        td = link_to 'Edit', edit_voice_call_path(voice_call)
-        td = link_to 'Destroy', voice_call, data: { confirm: 'Are you sure?' }, method: :delete
+        td = voice_call.number.phony_formatted
+        td = voice_call.created_at.to_formatted_s(:long)
+        td.text-right
+          =< link_to 'Show', voice_call
+          =< link_to 'Edit', edit_voice_call_path(voice_call)
+          =< link_to 'Destroy', voice_call, data: { confirm: 'Are you sure?' }, method: :delete

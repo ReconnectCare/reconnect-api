@@ -3,6 +3,7 @@ class TextMessagesController < ApplicationController
 
   # GET /text_messages
   def index
+    @pagy, @text_messages = pagy(@text_messages.includes(:conference).order(created_at: :desc))
   end
 
   # GET /text_messages/1

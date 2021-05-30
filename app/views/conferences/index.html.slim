@@ -1,33 +1,32 @@
-h1 Listing conferences
+== render "shared/page_header", title: "Conferences", icon: "fa-user-friends" do
+  =< link_to 'New Conference', new_conference_path
 
-table
-  thead
-    tr
-      th Sid
-      th Status
-      th Start time
-      th End time
-      th Conference number
-      th Provider
-      th Patient
-      th
-      th
-      th
-
-  tbody
-    - @conferences.each do |conference|
+.panel
+  table.table
+    thead
       tr
-        td = conference.sid
-        td = conference.status
-        td = conference.start_time
-        td = conference.end_time
-        td = conference.conference_number
-        td = conference.provider
-        td = conference.patient
-        td = link_to 'Show', conference
-        td = link_to 'Edit', edit_conference_path(conference)
-        td = link_to 'Destroy', conference, data: { confirm: 'Are you sure?' }, method: :delete
+        th Status
+        th Start time
+        th End time
+        th Conference number
+        th Provider
+        th Patient
+        th
 
-br
+    tbody
+      - @conferences.each do |conference|
+        tr
+          td = conference.status
+          td = conference.start_time.to_formatted_s(:long)
+          td = conference.end_time.to_formatted_s(:long)
+          td = link_to conference.conference_number, conference.conference_number
+          td
+            - if conference.provider
+              = link_to conference.provider, conference.provider
+          td = link_to conference.patient, conference.patient
+          td.text-right
+            =< link_to 'Show', conference
+            =< link_to 'Edit', edit_conference_path(conference)
+            =< link_to 'Destroy', conference, data: { confirm: 'Are you sure?' }, method: :delete
 
-= link_to 'New Conference', new_conference_path
+  == pagy_nav(@pagy)

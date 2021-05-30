@@ -1,8 +1,6 @@
-h1 Editing patient
+== render "shared/page_header", title: "Edit Patient" do
+  =< link_to 'Show', @patient
+  =< link_to 'Back', patients_path
 
-== render 'form'
-
-=> link_to 'Show', @patient
-'|
-=< link_to 'Back', patients_path
-
+.panel
+  == render 'form'

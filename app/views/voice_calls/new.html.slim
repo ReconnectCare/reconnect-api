@@ -1,5 +1,5 @@
-h1 New voice_call
+== render "shared/page_header", title: "New Voice Call" do
+  =< link_to 'Back', voice_calls_path
 
-== render 'form'
-
-= link_to 'Back', voice_calls_path
+.panel
+  == render 'form'

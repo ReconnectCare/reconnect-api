@@ -9,6 +9,6 @@ class ConferenceNumber < ApplicationRecord
   }
 
   def to_s
-    number
+    number.phony_formatted
   end
 end

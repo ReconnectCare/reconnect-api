@@ -3,6 +3,7 @@ class ConferenceNumbersController < ApplicationController
 
   # GET /conference_numbers or /conference_numbers.json
   def index
+    @pagy, @conference_numbers = pagy(@conference_numbers.order(created_at: :desc))
   end
 
   # GET /conference_numbers/1 or /conference_numbers/1.json

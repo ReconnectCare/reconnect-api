@@ -1,3 +1,6 @@
-h1 Listing text_messages
+== render "shared/page_header", title: "Text Messages"
 
-== render "text_messages/table", text_messages: @text_messages
+.panel
+  == render "text_messages/table", text_messages: @text_messages
+
+  == pagy_nav(@pagy)

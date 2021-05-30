@@ -1,13 +1,14 @@
-p
-  strong Name:
-  = @setting.name
-p
-  strong Value:
-  = @setting.value
-p
-  strong Value type:
-  = @setting.value_type
+== render "shared/page_header", title: "Setting" do
+  =< link_to 'Edit', edit_setting_path(@setting)
+  =< link_to 'Back', settings_path
 
-=> link_to 'Edit', edit_setting_path(@setting)
-'|
-=< link_to 'Back', settings_path
+.panel
+  p
+    strong Name:
+    = @setting.name
+  p
+    strong Value:
+    = @setting.value
+  p
+    strong Value type:
+    = @setting.value_type

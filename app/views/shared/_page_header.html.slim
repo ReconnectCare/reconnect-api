@@ -1,0 +1,11 @@
+.page-header.flex.flex-wrap.pb-4.items-end
+  div class="flex-initial"
+    h2 class="pb-0"
+      - if local_assigns[:icon]
+        i.fa.fa-fw.text-xl class=local_assigns[:icon]
+      .text-2xl.inline
+        = title
+
+  div class="flex-auto"
+    nav.flex.flex-row.justify-end
+      = yield

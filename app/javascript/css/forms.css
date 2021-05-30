@@ -40,6 +40,26 @@
     @apply pb-3;
   }
 
+  select {
+    @apply bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight pr-8;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right .5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+  }
+
+  select.datetime {
+    @apply bg-white appearance-none border-2 border-gray-200 rounded w-auto py-2 px-4 text-gray-700 leading-tight pr-8;
+  }
+
+  select[multiple=multiple] {
+    @apply pr-2;
+    background-image: none;
+    background-position: unset;
+    background-repeat: unset;
+    background-size: unset;
+  }
+
   .field_with_errors {
     input {
       @apply border-red-700;
@@ -48,7 +68,6 @@
 
   .field_without_errors {
     input {
-      @apply border-green-700;
     }
   }
 

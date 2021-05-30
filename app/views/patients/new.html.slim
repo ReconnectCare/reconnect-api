@@ -1,5 +1,5 @@
-h1 New patient
+== render "shared/page_header", title: "New Patient" do
+  =< link_to 'Back', patients_path
 
-== render 'form'
-
-= link_to 'Back', patients_path
+.panel
+  == render 'form'

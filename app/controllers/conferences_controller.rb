@@ -3,6 +3,7 @@ class ConferencesController < ApplicationController
 
   # GET /conferences or /conferences.json
   def index
+    @pagy, @conferences = pagy(@conferences.includes(:patient, :provider).order(start_time: :desc))
   end
 
   # GET /conferences/1 or /conferences/1.json

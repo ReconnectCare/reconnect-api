@@ -1,8 +1,6 @@
-h1 Editing provider
+== render "shared/page_header", title: "Edit Provider" do
+  =< link_to 'Show', @provider
+  =< link_to 'Back', providers_path
 
-== render 'form'
-
-=> link_to 'Show', @provider
-'|
-=< link_to 'Back', providers_path
-
+.panel
+  == render 'form'

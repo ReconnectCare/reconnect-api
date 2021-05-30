@@ -1,8 +1,7 @@
-h1 Editing voice_call
+== render "shared/page_header", title: "Edit Voice Call" do
+  =< link_to 'Show', @voice_call
+  =< link_to 'Back', voice_calls_path
 
-== render 'form'
 
-=> link_to 'Show', @voice_call
-'|
-=< link_to 'Back', voice_calls_path
-
+.panel
+  == render 'form'

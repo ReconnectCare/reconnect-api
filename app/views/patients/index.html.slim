@@ -1,47 +1,30 @@
-h1 Listing patients
+== render "shared/page_header", title: "Patients" do
+  =< link_to 'New Patient', new_patient_path
 
-table
-  thead
-    tr
-      th External
-      th First name
-      th Middle name
-      th Last name
-      th Date of birth
-      th Gender
-      th Office phone
-      th Cell phone
-      th Email
-      th Street
-      th Street 2
-      th City
-      th State
-      th Zipcode
-      th
-      th
-      th
-
-  tbody
-    - @patients.each do |patient|
+.panel
+  table.table
+    thead
       tr
-        td = patient.external_id
-        td = patient.first_name
-        td = patient.middle_name
-        td = patient.last_name
-        td = patient.date_of_birth
-        td = patient.gender
-        td = patient.office_phone
-        td = patient.cell_phone
-        td = patient.email
-        td = patient.street
-        td = patient.street_2
-        td = patient.city
-        td = patient.state
-        td = patient.zipcode
-        td = link_to 'Show', patient
-        td = link_to 'Edit', edit_patient_path(patient)
-        td = link_to 'Destroy', patient, data: { confirm: 'Are you sure?' }, method: :delete
+        th External
+        th Name
+        th Date of birth
+        th Gender
+        th Cell phone
+        th Email
+        th
 
-br
+    tbody
+      - @patients.each do |patient|
+        tr
+          td = patient.external_id
+          td = patient.full_name
+          td = patient.date_of_birth
+          td = patient.gender
+          td = patient.cell_phone.phony_formatted
+          td = patient.email
+          td.text-right
+            =< link_to 'Show', patient
+            =< link_to 'Edit', edit_patient_path(patient)
+            =< link_to 'Destroy', patient, data: { confirm: 'Are you sure?' }, method: :delete
 
-= link_to 'New Patient', new_patient_path
+  == pagy_nav(@pagy)

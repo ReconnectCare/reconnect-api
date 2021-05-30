@@ -1,48 +1,47 @@
-p#notice = notice
+== render "shared/page_header", title: "Patient" do
+  =< link_to 'Edit', edit_patient_path(@patient)
+  =< link_to 'Back', patients_path
 
-p
-  strong External:
-  = @patient.external_id
-p
-  strong First name:
-  = @patient.first_name
-p
-  strong Middle name:
-  = @patient.middle_name
-p
-  strong Last name:
-  = @patient.last_name
-p
-  strong Date of birth:
-  = @patient.date_of_birth
-p
-  strong Gender:
-  = @patient.gender
-p
-  strong Office phone:
-  = @patient.office_phone
-p
-  strong Cell phone:
-  = @patient.cell_phone
-p
-  strong Email:
-  = @patient.email
-p
-  strong Street:
-  = @patient.street
-p
-  strong Street 2:
-  = @patient.street_2
-p
-  strong City:
-  = @patient.city
-p
-  strong State:
-  = @patient.state
-p
-  strong Zipcode:
-  = @patient.zipcode
-
-=> link_to 'Edit', edit_patient_path(@patient)
-'|
-=< link_to 'Back', patients_path
+.panel
+  p
+    strong External:
+    = @patient.external_id
+  p
+    strong First name:
+    = @patient.first_name
+  p
+    strong Middle name:
+    = @patient.middle_name
+  p
+    strong Last name:
+    = @patient.last_name
+  p
+    strong Date of birth:
+    = @patient.date_of_birth
+  p
+    strong Gender:
+    = @patient.gender.phony_formatted
+  p
+    strong Office phone:
+    = @patient.office_phone.phony_formatted
+  p
+    strong Cell phone:
+    = @patient.cell_phone
+  p
+    strong Email:
+    = @patient.email
+  p
+    strong Street:
+    = @patient.street
+  p
+    strong Street 2:
+    = @patient.street_2
+  p
+    strong City:
+    = @patient.city
+  p
+    strong State:
+    = @patient.state
+  p
+    strong Zipcode:
+    = @patient.zipcode

@@ -3,6 +3,7 @@ class PatientsController < ApplicationController
 
   # GET /patients or /patients.json
   def index
+    @pagy, @patients = pagy(@patients.order(last_name: :asc, first_name: :asc))
   end
 
   # GET /patients/1 or /patients/1.json

@@ -1,8 +1,6 @@
-h1 Editing setting
+== render "shared/page_header", title: "Edit Setting" do
+  =< link_to 'Show', @setting
+  =< link_to 'Back', settings_path
 
-== render 'form'
-
-=> link_to 'Show', @setting
-'|
-=< link_to 'Back', settings_path
-
+.panel
+  == render 'form'

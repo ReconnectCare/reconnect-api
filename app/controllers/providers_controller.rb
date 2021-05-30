@@ -3,6 +3,7 @@ class ProvidersController < ApplicationController
 
   # GET /providers or /providers.json
   def index
+    @pagy, @providers = pagy(@providers.order(name: :asc))
   end
 
   # GET /providers/1 or /providers/1.json

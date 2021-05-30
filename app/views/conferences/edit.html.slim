@@ -1,8 +1,6 @@
-h1 Editing conference
+== render "shared/page_header", title: "Edit Conference" do
+  =< link_to 'Show', @conference
+  =< link_to 'Back', conferences_path
 
-== render 'form'
-
-=> link_to 'Show', @conference
-'|
-=< link_to 'Back', conferences_path
-
+.panel
+  == render 'form'
