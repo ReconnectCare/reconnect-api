@@ -15,8 +15,20 @@ class VoiceCall < ApplicationRecord
 
   Directions = OpenStruct.new({outbound: "outbound", inbound: "inbound"})
 
+  Reasons = OpenStruct.new({
+    call_started: "call_started",
+    conference_ended: "conference_ended",
+    conference_handled: "conference_handled",
+    conference_over: "conference_over",
+    provider_prompt: "provider_prompt",
+    provider_selected: "provider_selected",
+    provider_already_joined: "provider_already_joined",
+    joined: "joined"
+  })
+
   enum direction: Directions.to_h
   enum status: Statuses.to_h
+  enum reason: Reasons.to_h
 
   belongs_to :conference, optional: true
 
@@ -25,4 +37,5 @@ class VoiceCall < ApplicationRecord
 
   validates :direction, presence: true
   validates :status, presence: true
+  validates :reason, presence: true
 end

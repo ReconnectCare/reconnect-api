@@ -5,9 +5,10 @@
   .form-inputs
     = f.input :provider_id
     = f.association :conference
-    = f.input :direction
-    = f.input :status
     = f.input :number
+    = f.input :direction, collection: VoiceCall::Directions.to_h
+    = f.input :status, collection: VoiceCall::Statuses.to_h
+    = f.input :reason, collection: VoiceCall::Reasons.to_h
 
   .form-actions
     = f.button :submit

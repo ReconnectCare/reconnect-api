@@ -9,18 +9,19 @@ class Hooks::VoiceController < Hooks::HooksController
     conference_number = twilio_params["To"]
     caller_number = twilio_params["From"]
 
-    # TODO: collect & update voice status
     voice_call = VoiceCall.create(
       number: caller_number,
       provider_id: twilio_params["CallSid"],
       direction: VoiceCall::Directions.inbound,
-      status: VoiceCall::Statuses.in_progress
+      status: VoiceCall::Statuses.ringing,
+      reason: VoiceCall::Reasons.call_started
     )
 
     conference = Conference.in_progress_to(conference_number).first
 
     # Return handled if no conf
     if conference.nil?
+      voice_call.update!(reason: VoiceCall::Reasons.conference_over)
       conference_over
       return render xml: builder.to_s
     end
@@ -38,9 +39,11 @@ class Hooks::VoiceController < Hooks::HooksController
 
       # Provider calling, prompt them to join
       if conference.contestants.include?(caller_number)
+        voice_call.update!(reason: VoiceCall::Reasons.provider_prompt)
         intro conference
       else
         logger.debug "Provider #{caller_number} not a contestant in #{conference.contestants}"
+        voice_call.update!(reason: VoiceCall::Reasons.conference_handled)
         conference_handled
       end
     else
@@ -60,12 +63,16 @@ class Hooks::VoiceController < Hooks::HooksController
     conference = Conference.find(params[:id])
     caller_number = twilio_params["From"]
 
+    voice_call = VoiceCall.find_by(provider_id: twilio_params[:CallSid])
+
     case digits
     when 1
       if conference.provider.nil?
         conference.update!(provider: Provider.find_by(cell_phone: caller_number))
+        voice_call.update!(reason: VoiceCall::Reasons.provider_selected)
         join_conference conference
       else
+        voice_call.update!(reason: VoiceCall::Reasons.provider_already_joined)
         conference_handled
       end
     else
@@ -91,8 +98,11 @@ class Hooks::VoiceController < Hooks::HooksController
     conference = Conference.find(params[:id])
     status = twilio_params["StatusCallbackEvent"]
 
+    voice_call = VoiceCall.find_by(provider_id: twilio_params[:CallSid])
+
     case status
     when "participant-join"
+      voice_call.update!(reason: VoiceCall::Reasons.joined)
       conference.update!(sid: twilio_params["ConferenceSid"])
     when "conference-start"
       conference.update!(status: Conference::Statuses.in_progress)

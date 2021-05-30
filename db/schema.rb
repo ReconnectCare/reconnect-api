@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_30_135739) do
+ActiveRecord::Schema.define(version: 2021_05_30_140428) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -165,6 +165,7 @@ ActiveRecord::Schema.define(version: 2021_05_30_135739) do
     t.string "number", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "reason", default: "call_started", null: false
     t.index ["conference_id"], name: "index_voice_calls_on_conference_id"
   end
 

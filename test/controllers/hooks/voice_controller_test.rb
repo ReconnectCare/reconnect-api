@@ -13,14 +13,6 @@ class Hooks::VoiceControllerTest < ActionDispatch::IntegrationTest
     @provider = create(:provider, cell_phone: "+13038752721")
     @provider_second = create(:provider, cell_phone: "+13038750000")
 
-    # @voice_call = VoiceCall.create(
-    #   id: "b861039f-b8bb-478f-a131-48728d4b0b27",
-    #   number: "+13038752721",
-    #   conference_id: conference.id,
-    #   direction: "inbound",
-    #   status: "in_progress"
-    # )
-
     assert_equal Conference::Statuses.ready, @conference.status
   end
 
@@ -173,7 +165,7 @@ class Hooks::VoiceControllerTest < ActionDispatch::IntegrationTest
     assert_equal "+13038752721", voice_call.number
     assert_equal "CA880f7345eb289212fd6e5364ca6a615d", voice_call.provider_id
     assert_equal "inbound", voice_call.direction
-    assert_equal "in_progress", voice_call.status
+    assert_equal "ringing", voice_call.status
     assert_equal @conference, voice_call.conference
 
     @conference.reload
@@ -183,6 +175,8 @@ class Hooks::VoiceControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "respond - 1 to join - provider already joined" do
+    voice_call = create(:voice_call, provider_id: "CA880f7345eb289212fd6e5364ca6a615d")
+
     @conference.provider = @provider
     assert @conference.save
 
@@ -224,9 +218,14 @@ class Hooks::VoiceControllerTest < ActionDispatch::IntegrationTest
     assert_match "xml version", response.body
     assert_match "Say", response.body
     assert_match "Hangup", response.body
+
+    assert voice_call.reload
+    assert_equal VoiceCall::Reasons.provider_already_joined, voice_call.reason
   end
 
   test "respond - 1 to join - no provider yet" do
+    voice_call = create(:voice_call, provider_id: "CA880f7345eb289212fd6e5364ca6a615d")
+
     params = {
       "AccountSid" => "AC626895f618e5c09f0868ccbc91e0c93c",
       "ApiVersion" => "2010-04-01",
@@ -273,17 +272,27 @@ class Hooks::VoiceControllerTest < ActionDispatch::IntegrationTest
     @conference.reload
 
     assert_not_nil @conference.provider
+
+    assert voice_call.reload
+    assert_equal VoiceCall::Reasons.provider_selected, voice_call.reason
   end
 
   test "set sid on participant-join" do
+    voice_call = create(:voice_call, provider_id: "CA880f7345eb289212fd6e5364ca6a615d")
+
     send_status @conference, "participant-join"
 
     @conference.reload
 
     assert_equal "CF3930fd282149bfb30540168946cb0577", @conference.sid
+
+    assert voice_call.reload
+    assert VoiceCall::Reasons.joined, voice_call.status
   end
 
   test "status should be in_progress after conference-start" do
+    voice_call = create(:voice_call, provider_id: "CA880f7345eb289212fd6e5364ca6a615d")
+
     send_status @conference, "conference-start"
 
     @conference.reload
@@ -293,6 +302,8 @@ class Hooks::VoiceControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "status should be completed on conference-end" do
+    voice_call = create(:voice_call, provider_id: "CA880f7345eb289212fd6e5364ca6a615d")
+
     send_status @conference, "conference-end"
 
     @conference.reload
@@ -334,7 +345,7 @@ class Hooks::VoiceControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "call_status" do
-    voice_call = create(:voice_call, provider_id: "CAcea81fa159d2bec7e3a33da25c8bb8a4")
+    voice_call = create(:voice_call, provider_id: "CA880f7345eb289212fd6e5364ca6a615d")
 
     params = {
       "AccountSid" => "AC13816613a08b39cfa7b42ee9505fa77d",
@@ -351,7 +362,7 @@ class Hooks::VoiceControllerTest < ActionDispatch::IntegrationTest
       "CallerCountry" => "US",
       "CallerState" => "CO",
       "CallerZip" => "80022",
-      "CallSid" => "CAcea81fa159d2bec7e3a33da25c8bb8a4",
+      "CallSid" => "CA880f7345eb289212fd6e5364ca6a615d",
       "CallStatus" => "completed",
       "Direction" => "inbound",
       "Duration" => "1",
@@ -383,7 +394,7 @@ class Hooks::VoiceControllerTest < ActionDispatch::IntegrationTest
   def send_status conference, status
     params = {
       "AccountSid" => "AC13816613a08b39cfa7b42ee9505fa77d",
-      "CallSid" => "CAe3a028d450e01ff2489bc8625bf756bb",
+      "CallSid" => "CA880f7345eb289212fd6e5364ca6a615d",
       "Coaching" => "false",
       "ConferenceSid" => "CF3930fd282149bfb30540168946cb0577",
       "EndConferenceOnExit" => "false",

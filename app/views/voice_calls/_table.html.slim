@@ -5,6 +5,7 @@ table
       th Conference
       th Direction
       th Status
+      th Reason
       th Number
       th
       th
@@ -17,6 +18,7 @@ table
         td = voice_call.conference
         td = voice_call.direction
         td = voice_call.status
+        td = voice_call.reason
         td = voice_call.number
         td = link_to 'Show', voice_call
         td = link_to 'Edit', edit_voice_call_path(voice_call)
