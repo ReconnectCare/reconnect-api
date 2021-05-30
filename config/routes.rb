@@ -41,6 +41,7 @@ Rails.application.routes.draw do
     # post "texts", to: "texts#create"
     post "texts/:id", to: "texts#status", as: :text_status
     post "voice", to: "voice#create"
+    post "voice/call_status", to: "voice#call_status", as: :call_status
     post "voice/:id/status", to: "voice#status", as: :voice_status
     post "voice/:id/respond", to: "voice#respond", as: :voice_respond
     post "voice/:id/recorded", to: "voice#recorded", as: :voice_recorded

@@ -4,6 +4,7 @@ table
   thead
     tr
       th Sid
+      th Status
       th Start time
       th End time
       th Conference number
@@ -17,6 +18,7 @@ table
     - @conferences.each do |conference|
       tr
         td = conference.sid
+        td = conference.status
         td = conference.start_time
         td = conference.end_time
         td = conference.conference_number

@@ -5,10 +5,30 @@
   .form-inputs
     = f.input :sid
     = f.input :start_time
-    = f.input :end_time
+    = f.input :end_time, include_blank: true
     = f.association :conference_number
     = f.association :provider
     = f.association :patient
+    = f.input :status, collection: Conference::Statuses.to_h
+
+    fieldset data-controller="nested-rows"
+      legend Contestants
+      #contestants
+        - @conference.contestants.each do |contestant|
+          div.input.flex.flex-row
+            = text_field_tag 'conference[contestants][]', contestant
+            button data-action="nested-rows#remove"
+              i.fa.fa-trash
+
+        div#new-email.input.flex.flex-row data-nested-rows-target="newRow"
+          = text_field_tag 'conference[contestants][]'
+          button data-action="nested-rows#remove"
+            i.fa.fa-trash
+
+      .input
+        button data-action="nested-rows#add"
+          i.fa.fa-plus
+          |  New Contestant
 
   .form-actions
     = f.button :submit

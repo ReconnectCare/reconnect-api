@@ -18,7 +18,7 @@ class VoiceCall < ApplicationRecord
   enum direction: Directions.to_h
   enum status: Statuses.to_h
 
-  belongs_to :conference
+  belongs_to :conference, optional: true
 
   phony_normalize :number, default_country_code: "US"
   validates :number, phony_plausible: true, presence: true

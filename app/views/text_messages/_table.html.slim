@@ -1,0 +1,23 @@
+table
+  thead
+    tr
+      th Provider
+      th Direction
+      th Status
+      th Body
+      th Error code
+      th Number
+      th Conference
+      th
+
+  tbody
+    - text_messages.each do |text_message|
+      tr
+        td = text_message.provider_id
+        td = text_message.direction
+        td = text_message.status
+        td = text_message.body
+        td = text_message.error_code
+        td = text_message.number
+        td = text_message.conference
+        td = link_to 'Show', text_message

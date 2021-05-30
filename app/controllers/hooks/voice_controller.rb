@@ -9,6 +9,14 @@ class Hooks::VoiceController < Hooks::HooksController
     conference_number = twilio_params["To"]
     caller_number = twilio_params["From"]
 
+    # TODO: collect & update voice status
+    voice_call = VoiceCall.create(
+      number: caller_number,
+      provider_id: twilio_params["CallSid"],
+      direction: VoiceCall::Directions.inbound,
+      status: VoiceCall::Statuses.in_progress
+    )
+
     conference = Conference.in_progress_to(conference_number).first
 
     # Return handled if no conf
@@ -17,16 +25,9 @@ class Hooks::VoiceController < Hooks::HooksController
       return render xml: builder.to_s
     end
 
-    logger.debug "Active conference found #{conference.id}"
+    voice_call.update!(conference: conference)
 
-    # TODO: collect & update voice status
-    voice_call = VoiceCall.create(
-      conference: conference,
-      number: caller_number,
-      provider_id: twilio_params["CallSid"],
-      direction: VoiceCall::Directions.inbound,
-      status: VoiceCall::Statuses.in_progress
-    )
+    logger.debug "Active conference found #{conference.id}"
 
     conference.voice_calls << voice_call
     conference.status = Conference::Statuses.waiting
@@ -91,12 +92,21 @@ class Hooks::VoiceController < Hooks::HooksController
     status = twilio_params["StatusCallbackEvent"]
 
     case status
+    when "participant-join"
+      conference.update!(sid: twilio_params["ConferenceSid"])
     when "conference-start"
       conference.update!(status: Conference::Statuses.in_progress)
     when "conference-end"
       conference.update!(end_time: DateTime.now, status: Conference::Statuses.completed)
     end
 
+    render xml: builder.to_s
+  end
+
+  def call_status
+    provider_id = twilio_params[:CallSid]
+    voice_call = VoiceCall.find_by(provider_id: provider_id)
+    voice_call.update(status: twilio_params[:CallStatus])
     render xml: builder.to_s
   end
 
@@ -209,6 +219,9 @@ class Hooks::VoiceController < Hooks::HooksController
       "StartConferenceOnEnter",
       "Hold",
       "Muted",
+      "CallSidEndingConference",
+      "ReasonConferenceEnded",
+      "Reason",
       "url"
     )
   end

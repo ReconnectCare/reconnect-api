@@ -70,13 +70,17 @@ class Hooks::VoiceControllerTest < ActionDispatch::IntegrationTest
     url = hooks_voice_url
     headers = sig_header(url, params)
 
-    assert_no_difference "VoiceCall.count" do
+    assert_difference "VoiceCall.count" do
       post url, headers: headers, params: params
       assert_response :success
       assert_match "xml version", response.body
       assert_match "Say", response.body
       assert_match "Hangup", response.body
     end
+
+    voice_call = VoiceCall.order(created_at: :asc).last
+
+    assert_equal "CA880f7345eb289212fd6e5364ca6a615d", voice_call.provider_id
   end
 
   test "post create - patient - join conference" do
@@ -271,7 +275,15 @@ class Hooks::VoiceControllerTest < ActionDispatch::IntegrationTest
     assert_not_nil @conference.provider
   end
 
-  test "status should be in_progress after second participant joins" do
+  test "set sid on participant-join" do
+    send_status @conference, "participant-join"
+
+    @conference.reload
+
+    assert_equal "CF3930fd282149bfb30540168946cb0577", @conference.sid
+  end
+
+  test "status should be in_progress after conference-start" do
     send_status @conference, "conference-start"
 
     @conference.reload
@@ -319,6 +331,53 @@ class Hooks::VoiceControllerTest < ActionDispatch::IntegrationTest
     assert_equal @conference.id.to_s, args[0]
     assert_equal "https://api.twilio.com/2010-04-01/Accounts/AC626895f618e5c09f0868ccbc91e0c93c/Recordings/REbb9313bf24cea3ecf30e647c802601c6", args[1]
     assert_equal "REbb9313bf24cea3ecf30e647c802601c6", args[2]
+  end
+
+  test "call_status" do
+    voice_call = create(:voice_call, provider_id: "CAcea81fa159d2bec7e3a33da25c8bb8a4")
+
+    params = {
+      "AccountSid" => "AC13816613a08b39cfa7b42ee9505fa77d",
+      "ApiVersion" => "2010-04-01",
+      "CallbackSource" => "call-progress-events",
+      "CallDuration" => "3",
+      "Called" => "+17207041440",
+      "CalledCity" => "no value",
+      "CalledCountry" => "US",
+      "CalledState" => "CO",
+      "CalledZip" => "no value",
+      "Caller" => "+13038752721",
+      "CallerCity" => "DENVER",
+      "CallerCountry" => "US",
+      "CallerState" => "CO",
+      "CallerZip" => "80022",
+      "CallSid" => "CAcea81fa159d2bec7e3a33da25c8bb8a4",
+      "CallStatus" => "completed",
+      "Direction" => "inbound",
+      "Duration" => "1",
+      "From" => "+13038752721",
+      "FromCity" => "DENVER",
+      "FromCountry" => "US",
+      "FromState" => "CO",
+      "FromZip" => "80022",
+      "SequenceNumber" => "0",
+      "Timestamp" => "Sun, 30 May 2021 13:48:10 +0000",
+      "To" => "+17207041440",
+      "ToCity" => "no value",
+      "ToCountry" => "US",
+      "ToState" => "CO",
+      "ToZip" => "no value"
+    }
+
+    url = hooks_call_status_url(@conference)
+    headers = sig_header(url, params)
+
+    post url, headers: headers, params: params
+    assert_response :success
+
+    assert voice_call.reload
+
+    assert_equal VoiceCall::Statuses.completed, voice_call.status
   end
 
   def send_status conference, status

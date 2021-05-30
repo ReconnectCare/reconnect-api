@@ -2,25 +2,36 @@ p#notice = notice
 
 p
   strong Sid:
-  = @conference.sid
+  =< @conference.sid
+p
+  strong Status:
+  =< @conference.status
 p
   strong Start time:
-  = @conference.start_time
+  =< @conference.start_time
 p
   strong End time:
-  = @conference.end_time
+  =< @conference.end_time
 p
   strong Conference number:
-  = @conference.conference_number
+  =< @conference.conference_number
 p
   strong Provider:
-  = @conference.provider
+  =< @conference.provider
 p
   strong Patient:
-  = @conference.patient
+  =< @conference.patient
 p
   strong Contestants:
-  = @conference.contestants
+  =< @conference.contestants
+
+div.mb-8
+  p:strong Voice Calls
+  == render 'voice_calls/table', voice_calls: @conference.voice_calls
+
+div.mb-8
+  p:strong Text Messages
+  == render "text_messages/table", text_messages: @conference.text_messages
 
 => link_to 'Edit', edit_conference_path(@conference)
 '|
