@@ -9,10 +9,10 @@ class Api::V1::ConferencesController < Api::ApiController
       raise Exceptions::ApiDataError.new("patient").set_errors(@patient.errors.messages).set_status(422)
     end
 
-    conference_number = ConferenceNumber.first_available
+    conference_number = ConferenceNumber.available_numbers.first
 
     if conference_number.nil?
-      raise Exceptions::ApiDataError.new("conference_number").set_errors("no available numbers").set_status(422)
+      raise Exceptions::ApiDataError.new("conference_number").set_errors(["no available numbers."]).set_status(422)
     end
 
     @conference = Conference.new(
@@ -22,8 +22,10 @@ class Api::V1::ConferencesController < Api::ApiController
       external_id: conference_params[:external_id]
     )
 
-    # TODO: check for available providers, error if none available (API call) -> Dump to worker
-    providers = {}
+    providers = OnDemandClient.new.get_available_providers(@patient.state)
+    if providers.none?
+      raise Exceptions::ApiDataError.new("providers").set_errors(["no available providers for #{@patient.state}."]).set_status(422)
+    end
 
     if @conference.save
       ContactProvidersWorker.perform_async(@conference.id, providers)

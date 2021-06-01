@@ -3,6 +3,7 @@ require_relative "../config/environment"
 require "rails/test_help"
 require "vcr"
 require "sidekiq/testing"
+require "minitest/autorun"
 
 Sidekiq::Testing.fake!
 

@@ -4,10 +4,6 @@ class ConferenceNumber < ApplicationRecord
   phony_normalize :number, default_country_code: "US"
   validates :number, phony_plausible: true, presence: true
 
-  scope :first_available, -> {
-    first
-  }
-
   scope :available_numbers, -> {
     where(
       "id NOT IN (:active_conferences)",

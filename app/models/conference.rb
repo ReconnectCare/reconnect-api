@@ -18,7 +18,7 @@ class Conference < ApplicationRecord
   enum status: Statuses.to_h
 
   scope :in_progress_to, ->(number) {
-    joins(:conference_number).where(status: [:ready, :waiting]).where("conference_numbers.number = ?", number).where("conferences.end_time IS NULL")
+    joins(:conference_number).where(status: [:ready, :waiting, :in_progress]).where("conference_numbers.number = ?", number).where("conferences.end_time IS NULL")
   }
 
   scope :active_conferences, -> {

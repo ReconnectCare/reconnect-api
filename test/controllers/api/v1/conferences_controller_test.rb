@@ -1,55 +1,143 @@
 require "test_helper"
 
 class ConferencesControllerTest < ActionDispatch::IntegrationTest
-  setup do
-    create(:conference_number)
-  end
-
-  test "create - error w/out params" do
-    token = create(:api_token)
-    user = token.user
-
-    params = {
-      patient: {bad: :param}
-    }
-    post api_v1_conferences_url, headers: {Authorization: "Bearer #{user.api_tokens.first.token}"}, params: params
-
-    assert_response :unprocessable_entity
-
-    assert_equal "patient", response.parsed_body["message"]
-  end
-
-  test "create" do
-    token = create(:api_token)
-    user = token.user
-
-    params = {
-      external_id: "my_external_id",
-      patient: attributes_for(:patient)
-    }
-
-    assert_difference("Conference.count") do
-      post api_v1_conferences_url, headers: {Authorization: "Bearer #{user.api_tokens.first.token}"}, params: params
+  class PatientParamsConferencesControllerTest < ConferencesControllerTest
+    setup do
+      create(:conference_number)
     end
 
-    assert_response :success
+    test "create - error w/out params" do
+      token = create(:api_token)
+      user = token.user
 
-    assert Patient.find_by(external_id: params.dig(:patient, :external_id))
+      params = {
+        patient: {bad: :param}
+      }
+      post api_v1_conferences_url, headers: {Authorization: "Bearer #{user.api_tokens.first.token}"}, params: params
 
-    assert_equal "+13035550000", response.parsed_body.dig("conference_number", "number")
+      assert_response :unprocessable_entity
 
-    # TODO: check rest of json pp response.parsed_body
+      assert_equal "patient", response.parsed_body["message"]
+    end
 
-    conference = Conference.order(created_at: :asc).last
+    test "create" do
+      token = create(:api_token)
+      user = token.user
 
-    assert_equal "my_external_id", conference.external_id
+      params = {
+        external_id: "my_external_id",
+        patient: attributes_for(:patient)
+      }
+
+      mock = Minitest::Mock.new
+      def mock.get_available_providers state
+        [OnDemandClient::Provider.new]
+      end
+
+      OnDemandClient.stub :new, mock do
+        assert_difference("Conference.count") do
+          post api_v1_conferences_url, headers: {Authorization: "Bearer #{user.api_tokens.first.token}"}, params: params
+        end
+      end
+
+      assert_response :success
+
+      assert Patient.find_by(external_id: params.dig(:patient, :external_id))
+
+      assert_equal "+13035550000", response.parsed_body.dig("conference_number", "number")
+
+      # TODO: check rest of json pp response.parsed_body
+
+      conference = Conference.order(created_at: :asc).last
+
+      assert_equal "my_external_id", conference.external_id
+    end
+
+    test "create - existing patient" do
+      token = create(:api_token)
+      user = token.user
+
+      patient_params = attributes_for(:patient)
+      params = {
+        external_id: "my_external_id",
+        patient: patient_params
+      }
+
+      assert Patient.create(patient_params)
+
+      mock = Minitest::Mock.new
+      def mock.get_available_providers state
+        [OnDemandClient::Provider.new]
+      end
+
+      OnDemandClient.stub :new, mock do
+        assert_difference("Conference.count", 1) do
+          assert_difference("Patient.count", 0) do
+            post api_v1_conferences_url, headers: {Authorization: "Bearer #{user.api_tokens.first.token}"}, params: params
+          end
+        end
+      end
+
+      assert_response :success
+
+      assert Patient.find_by(external_id: params.dig(:patient, :external_id))
+
+      assert_equal "+13035550000", response.parsed_body.dig("conference_number", "number")
+
+      conference = Conference.order(created_at: :asc).last
+
+      assert_equal "my_external_id", conference.external_id
+    end
+
+    test "create - no available providers" do
+      token = create(:api_token)
+      user = token.user
+
+      params = {
+        external_id: "my_external_id",
+        patient: attributes_for(:patient)
+      }
+
+      mock = Minitest::Mock.new
+      def mock.get_available_providers state
+        []
+      end
+
+      OnDemandClient.stub :new, mock do
+        assert_difference("Conference.count", 0) do
+          assert_difference("Patient.count", 1) do
+            post api_v1_conferences_url, headers: {Authorization: "Bearer #{user.api_tokens.first.token}"}, params: params
+          end
+        end
+      end
+
+      assert_response :unprocessable_entity
+
+      assert_equal "providers", response.parsed_body["message"]
+      assert_equal "no available providers for MyString.", response.parsed_body["errors"][0]
+    end
   end
 
-  test "create - existing patient" do
-    fail "IMPL"
-  end
+  class NumbersConferencesControllerTest < ConferencesControllerTest
+    setup do
+      @conference_number = create(:conference_number)
+      @conference = create(:conference, conference_number: @conference_number)
+    end
 
-  test "create - no available numbers" do
-    fail "IMPL"
+    test "create - error no available_numbers" do
+      token = create(:api_token)
+      user = token.user
+
+      params = {
+        external_id: "my_external_id",
+        patient: attributes_for(:patient)
+      }
+      post api_v1_conferences_url, headers: {Authorization: "Bearer #{user.api_tokens.first.token}"}, params: params
+
+      assert_response :unprocessable_entity
+
+      assert_equal "conference_number", response.parsed_body["message"]
+      assert_equal "no available numbers.", response.parsed_body["errors"][0]
+    end
   end
 end
