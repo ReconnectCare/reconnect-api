@@ -14,7 +14,7 @@ table.table
       tr
         td = conference.status
         td = conference.start_time.to_formatted_s(:long)
-        td = conference.end_time.to_formatted_s(:long)
+        td = conference.end_time&.to_formatted_s(:long)
         td = link_to conference.conference_number, conference.conference_number
         td
           - if conference.provider

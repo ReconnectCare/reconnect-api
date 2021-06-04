@@ -11,10 +11,10 @@
     =< @conference.status
   p
     strong Start time:
-    =< @conference.start_time
+    =< @conference.start_time.to_formatted_s(:long)
   p
     strong End time:
-    =< @conference.end_time
+    =< @conference.end_time&.to_formatted_s(:long)
   p
     strong Conference number:
     =< @conference.conference_number

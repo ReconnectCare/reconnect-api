@@ -72,3 +72,10 @@ Setup Data
 If using puma-dev
 
     puma-dev link
+
+
+curl --location --request GET 'https://ondemandapi.ondemandvisit.com/AuthToken' \
+    --header 'Content-Type: application/x-www-form-urlencoded' \
+    --data-urlencode 'grant_type=password' \
+    --data-urlencode 'username=apicall' \
+    --data-urlencode 'password=<password>'
