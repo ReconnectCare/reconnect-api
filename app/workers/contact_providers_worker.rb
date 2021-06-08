@@ -2,8 +2,6 @@ class ContactProvidersWorker
   include Sidekiq::Worker
 
   def perform(conference_id, providers)
-    # TODO save all providers to database
-
     providers.each do |provider|
       SaveProvider.new(provider).call
     end
@@ -13,7 +11,7 @@ class ContactProvidersWorker
     conference = Conference.find(conference_id)
 
     candidates.each do |candidate|
-      provider_text_message = Setting.get("provider_text_message", "Please call <%= conference.number %>")
+      provider_text_message = Setting.get("provider_text_message", "Please call <%= conference.number_link %>")
       body = Setting.render(provider_text_message, {conference: conference})
 
       text_message = TextMessage.new(
@@ -33,7 +31,14 @@ class ContactProvidersWorker
   def get_candidates(providers)
     providers_to_attempt = Setting.get("providers_to_attempt", 2)
 
-    # TODO pick X number of providers to SMS
-    providers
+    from = providers.dup
+    candidates = []
+
+    while from.count > 0 && candidates.count < providers_to_attempt
+      idx = SecureRandom.rand(from.count - 1)
+      candidates << from.delete_at(idx)
+    end
+
+    candidates
   end
 end

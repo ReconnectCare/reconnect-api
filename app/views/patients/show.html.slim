@@ -20,13 +20,13 @@
     = @patient.date_of_birth
   p
     strong Gender:
-    = @patient.gender.phony_formatted
+    = @patient.gender
   p
     strong Office phone:
-    = @patient.office_phone.phony_formatted
+    = @patient.office_phone&.phony_formatted
   p
     strong Cell phone:
-    = @patient.cell_phone
+    = @patient.cell_phone&.phony_formatted
   p
     strong Email:
     = @patient.email

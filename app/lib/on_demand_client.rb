@@ -54,11 +54,12 @@ class OnDemandClient
 
   def refresh_token
     params = {
+      grant_type: "password",
       username: Rails.application.credentials.on_demand[:username],
       password: Rails.application.credentials.on_demand[:password]
     }
 
-    resp = HTTP.headers(accept: "application/json").get(full_url("/AuthToken"), params: params)
+    resp = HTTP.headers(accept: "application/json", 'Content-Type': "application/x-www-form-urlencoded").get(full_url("/AuthToken"), form: params)
 
     if resp.code != 200
       raise "On Demand Auth Error (#{resp.status}): #{resp.body}"

@@ -28,4 +28,9 @@ class Conference < ApplicationRecord
   def to_s
     start_time.to_s
   end
+
+  def number_link
+    number = conference_number.number
+    "tel:#{number}"
+  end
 end
