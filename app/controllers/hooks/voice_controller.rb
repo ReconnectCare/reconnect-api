@@ -70,6 +70,9 @@ class Hooks::VoiceController < Hooks::HooksController
       if conference.provider.nil?
         conference.update!(provider: Provider.find_by(cell_phone: caller_number))
         voice_call.update!(reason: VoiceCall::Reasons.provider_selected)
+        # TODO: Join patient & provider in OnDemand
+        # Schedule
+
         join_conference conference
       else
         voice_call.update!(reason: VoiceCall::Reasons.provider_already_joined)
@@ -107,6 +110,7 @@ class Hooks::VoiceController < Hooks::HooksController
     when "conference-start"
       conference.update!(status: Conference::Statuses.in_progress)
     when "conference-end"
+      # TODO Send conference duration to OnDemandClient
       conference.update!(end_time: DateTime.now, status: Conference::Statuses.completed)
     end
 

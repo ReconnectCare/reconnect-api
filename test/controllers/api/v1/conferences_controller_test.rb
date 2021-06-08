@@ -46,7 +46,8 @@ class ConferencesControllerTest < ActionDispatch::IntegrationTest
 
       assert_equal "+13035550000", response.parsed_body.dig("conference_number", "number")
 
-      # TODO: check rest of json pp response.parsed_body
+      # TODO: check rest of json
+      # pp response.parsed_body
 
       conference = Conference.order(created_at: :asc).last
 

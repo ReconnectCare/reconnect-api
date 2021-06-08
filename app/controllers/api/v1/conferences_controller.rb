@@ -9,6 +9,8 @@ class Api::V1::ConferencesController < Api::ApiController
       raise Exceptions::ApiDataError.new("patient").set_errors(@patient.errors.messages).set_status(422)
     end
 
+    SendPatientToOnDemandWorker.perform_async(@patient)
+
     conference_number = ConferenceNumber.available_numbers.first
 
     if conference_number.nil?

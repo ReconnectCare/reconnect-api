@@ -6,11 +6,13 @@ class ContactProvidersWorker
       SaveProvider.new(provider).call
     end
 
-    candidates = get_candidates(providers)
+    contestants = get_contestants(providers)
 
     conference = Conference.find(conference_id)
+    contestant_numbers = contestants.map { |c| PhonyRails.normalize_number(c.cell_phone, country_code: "US") }
+    conference.update(contestants: contestant_numbers)
 
-    candidates.each do |candidate|
+    contestants.each do |contestant|
       provider_text_message = Setting.get("provider_text_message", "Please call <%= conference.number_link %>")
       body = Setting.render(provider_text_message, {conference: conference})
 
@@ -19,7 +21,7 @@ class ContactProvidersWorker
         status: TextMessage::Statuses.ready,
         direction: TextMessage::Directions.outbound,
         body: body,
-        number: candidate.cell_phone
+        number: contestant.cell_phone
       )
 
       text_message.save!
@@ -28,17 +30,17 @@ class ContactProvidersWorker
     end
   end
 
-  def get_candidates(providers)
+  def get_contestants(providers)
     providers_to_attempt = Setting.get("providers_to_attempt", 2)
 
     from = providers.dup
-    candidates = []
+    contestants = []
 
-    while from.count > 0 && candidates.count < providers_to_attempt
+    while from.count > 0 && contestants.count < providers_to_attempt
       idx = SecureRandom.rand(from.count - 1)
-      candidates << from.delete_at(idx)
+      contestants << from.delete_at(idx)
     end
 
-    candidates
+    contestants
   end
 end
