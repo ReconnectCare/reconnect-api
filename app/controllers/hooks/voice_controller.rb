@@ -70,8 +70,8 @@ class Hooks::VoiceController < Hooks::HooksController
       if conference.provider.nil?
         conference.update!(provider: Provider.find_by(cell_phone: caller_number))
         voice_call.update!(reason: VoiceCall::Reasons.provider_selected)
-        # TODO: Join patient & provider in OnDemand
-        # Schedule
+        # TODO: Schedule visit
+        # CreateOnDemandAppointmentWorker.perform_async(conference.id)
 
         join_conference conference
       else

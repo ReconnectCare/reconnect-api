@@ -14,5 +14,6 @@ FactoryBot.define do
     city { "MyString" }
     state { "MyString" }
     zipcode { "MyString" }
+    odv_id { "1002.3" }
   end
 end

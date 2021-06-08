@@ -7,5 +7,9 @@ FactoryBot.define do
     patient
     provider { nil }
     reason { "Telehealth call" }
+
+    trait :with_provider do
+      provider
+    end
   end
 end

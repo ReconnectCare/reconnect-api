@@ -29,8 +29,25 @@ class OnDemandClient
   end
 
   Visit = Struct.new(:pat_id, :patient_name, :reason, :app_type, :phone_no, :phy_code, :latitude, :longitude, :current_location, :current_state, :patient_platform, :pat_platform_desc, :created_from) do
-    def self.create
-      OnDemandClient::Visit.new
+    def self.create conference
+      patient = conference.patient
+      provider = conference.provider
+
+      OnDemandClient::Visit.new(
+        patient.odv_id,
+        "#{patient.first_name} #{patient.last_name}",
+        conference.reason,
+        "API",
+        patient.cell_phone,
+        provider.phy_code,
+        0,
+        0,
+        patient.state,
+        patient.state,
+        "API",
+        "API",
+        3
+      )
     end
   end
 
@@ -52,10 +69,7 @@ class OnDemandClient
     #
     # endpoint = "/api/Patient/"
     #
-    # params = od_patient.to_h.each_with_object({}) { |(k, v), memo|
-    # TODO: upcase any params ending in Id
-    #   memo[k.to_s.camelcase] = v
-    # }
+    # params = camelcase_params(od_patient.to_h)
     #
     # resp = HTTP.auth("Bearer #{auth_token.token}")
     #   .headers(accept: "application/json", 'Content-Type': "application/json")
@@ -63,9 +77,18 @@ class OnDemandClient
     0
   end
 
-  def schedule_appointment
+  def schedule_appointment od_visit
     # TODO: Get this API call working
+    # endpoint = "/api/Appointment/ScheduleVisit"
     #
+    # params = camelcase_params(od_visit.to_h)
+    #
+    # resp = HTTP.auth("Bearer #{auth_token.token}")
+    #   .headers(accept: "application/json")
+    #   .post(full_url(endpoint), json: params)
+    {
+      "VisitID" => 12551.0, "Token" => nil, "SessionID" => nil
+    }
   end
 
   def get_available_providers state
@@ -123,5 +146,13 @@ class OnDemandClient
 
   def full_url path
     URI.join(ROOT_URL, path)
+  end
+
+  def camelcase_params hash
+    hash.each_with_object({}) { |(k, v), memo|
+      name = k.to_s.camelcase
+      name = name.sub(/Id\z/, "ID") if name.ends_with?("Id")
+      memo[name] = v
+    }
   end
 end
