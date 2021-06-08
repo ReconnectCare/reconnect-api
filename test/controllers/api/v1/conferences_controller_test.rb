@@ -26,6 +26,7 @@ class ConferencesControllerTest < ActionDispatch::IntegrationTest
 
       params = {
         external_id: "my_external_id",
+        reason: "health call",
         patient: attributes_for(:patient)
       }
 
@@ -61,6 +62,7 @@ class ConferencesControllerTest < ActionDispatch::IntegrationTest
       patient_params = attributes_for(:patient)
       params = {
         external_id: "my_external_id",
+        reason: "health call",
         patient: patient_params
       }
 
@@ -94,6 +96,7 @@ class ConferencesControllerTest < ActionDispatch::IntegrationTest
 
       params = {
         external_id: "my_external_id",
+        reason: "health call",
         patient: attributes_for(:patient)
       }
 
@@ -130,6 +133,7 @@ class ConferencesControllerTest < ActionDispatch::IntegrationTest
 
       params = {
         external_id: "my_external_id",
+        reason: "health call",
         patient: attributes_for(:patient)
       }
       post api_v1_conferences_url, headers: {Authorization: "Bearer #{user.api_tokens.first.token}"}, params: params

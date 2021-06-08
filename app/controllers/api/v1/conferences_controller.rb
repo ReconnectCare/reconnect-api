@@ -21,7 +21,8 @@ class Api::V1::ConferencesController < Api::ApiController
       start_time: DateTime.now,
       patient: @patient,
       conference_number: conference_number,
-      external_id: conference_params[:external_id]
+      external_id: conference_params[:external_id],
+      reason: conference_params[:reason]
     )
 
     providers = OnDemandClient.new.get_available_providers(@patient.state)
@@ -40,7 +41,7 @@ class Api::V1::ConferencesController < Api::ApiController
   private
 
   def conference_params
-    params.permit(:external_id)
+    params.permit(:external_id, :reason)
   end
 
   def patient_params

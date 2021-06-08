@@ -17,6 +17,8 @@ class Conference < ApplicationRecord
 
   enum status: Statuses.to_h
 
+  validates :reason, presence: true
+
   scope :in_progress_to, ->(number) {
     joins(:conference_number).where(status: [:ready, :waiting, :in_progress]).where("conference_numbers.number = ?", number).where("conferences.end_time IS NULL")
   }

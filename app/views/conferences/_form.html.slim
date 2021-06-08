@@ -10,6 +10,7 @@
     = f.association :provider
     = f.association :patient
     = f.input :status, collection: Conference::Statuses.to_h
+    = f.input :reason
 
     fieldset data-controller="nested-rows"
       legend Contestants

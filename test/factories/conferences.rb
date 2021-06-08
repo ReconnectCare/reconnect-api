@@ -6,5 +6,6 @@ FactoryBot.define do
     conference_number
     patient
     provider { nil }
+    reason { "Telehealth call" }
   end
 end
