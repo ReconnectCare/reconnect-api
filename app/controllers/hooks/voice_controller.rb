@@ -135,21 +135,23 @@ class Hooks::VoiceController < Hooks::HooksController
   end
 
   def intro conference
-    # TODO: add system setting for message
+    provider_voice_greating = Setting.get("provider_voice_greating", "Press 1 to join the conference.")
+    provider_voice_greating = Setting.render(provider_voice_greating, {conference: conference})
+
     builder.gather(action: hooks_voice_respond_url(conference, URL_OPTIONS), input: :dtmf, numDigits: 1, actionOnEmptyResult: true) do |gather|
-      gather.say(message: "Press 1 to join the conference.")
+      gather.say(message: provider_voice_greating)
     end
   end
 
   def conference_over
-    # TODO: add system setting for message
-    builder.say(message: "The conference is over.")
+    conference_has_ended_message = Setting.get("conference_has_ended_message", "The conference is over.")
+    builder.say(message: conference_has_ended_message)
     builder.hangup
   end
 
   def conference_handled
-    # TODO: add system setting for message
-    builder.say(message: "The call has been handled.")
+    provider_voice_conference_handled_message = Setting.get("provider_voice_conference_handled_message", "The call has been handled.")
+    builder.say(message: provider_voice_conference_handled_message)
     builder.hangup
   end
 

@@ -30,3 +30,18 @@ Setting.find_or_create_by(name: "provider_text_message") do |s|
   s.value = "Need to get content for this."
   s.value_type = Setting::VALUE_TYPES.string
 end
+
+Setting.find_or_create_by(name: "provider_voice_greating") do |s|
+  s.value = "Press 1 to join the conference."
+  s.value_type = Setting::VALUE_TYPES.string
+end
+
+Setting.find_or_create_by(name: "conference_has_ended_message") do |s|
+  s.value = "The conference is over."
+  s.value_type = Setting::VALUE_TYPES.string
+end
+
+Setting.find_or_create_by(name: "provider_voice_conference_handled_message ") do |s|
+  s.value = "The call has been handled."
+  s.value_type = Setting::VALUE_TYPES.string
+end
