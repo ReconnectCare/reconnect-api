@@ -24,7 +24,6 @@ Logs are at /var/log/eb-docker/containers/web|sidekiq
 
         pack build reconnect-api --env NODE_ENV=production --env RAILS_ENV=production --env RAILS_PRODUCTION_KEY=$(cat config/credentials/production.key) --path . --buildpack ./ruby-buildpack  --descriptor project.toml --builder paketobuildpacks/builder:full
 
-
 ## Test Image Locally
 
         docker run --rm -p 8000:5000 --env DATABASE_URL=postgresql://dcandland@docker.for.mac.host.internal/reconnect_api_development --env RAILS_MASTER_KEY=$(cat config/master.key) --env RAILS_ENV=development --env RAILS_LOG_TO_STDOUT=true --env RAILS_SERVE_STATIC_FILES=true reconnect-api

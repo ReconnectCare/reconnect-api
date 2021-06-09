@@ -4,6 +4,14 @@ class OnDemandClientTest < ActiveSupport::TestCase
   test "auth_token" do
   end
 
+  test "Token" do
+    token = OnDemandClient::Token.new("XSP_yCkMExL9eqVt", 1799, Time.now.utc)
+    refute token.expired?
+
+    token = OnDemandClient::Token.new("XSP_yCkMExL9eqVt", 1799, Time.at(Time.now.utc.to_i - 1800))
+    assert token.expired?
+  end
+
   test "get_available_providers" do
   end
 

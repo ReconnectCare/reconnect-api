@@ -36,7 +36,7 @@ class ConferencesControllerTest < ActionDispatch::IntegrationTest
       end
 
       OnDemandClient.stub :new, mock do
-        assert_difference("Conference.count") do
+        assert_difference("Conference.count" => 1, "SendPatientToOnDemandWorker.jobs.count" => 1) do
           post api_v1_conferences_url, headers: {Authorization: "Bearer #{user.api_tokens.first.token}"}, params: params
         end
       end

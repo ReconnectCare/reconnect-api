@@ -1,7 +1,11 @@
 class OnDemandClient
   ROOT_URL = "https://ondemandapi.ondemandvisit.com"
 
-  Token = Struct.new(:token, :expires_in, :created_at)
+  Token = Struct.new(:token, :expires_in, :created_at) do
+    def expired?
+      Time.now.utc.to_i - created_at.to_i > expires_in
+    end
+  end
 
   Provider = Struct.new(:user_id, :start_time, :close_time, :provider_name, :phy_code, :cell_phone)
 
@@ -53,12 +57,8 @@ class OnDemandClient
 
   @@token = nil
 
-  def initialize
-  end
-
   def auth_token
-    # TODO verify & test the timeout
-    if @@token && Time.now.utc - @@token.created_at > 23.hours
+    if @@token&.expired?
       @@token = nil
     end
     @@token ||= refresh_token
@@ -155,7 +155,7 @@ class OnDemandClient
       raise "On Demand Auth Error (#{resp.status}): #{resp.body}"
     else
       json = resp.parse
-      Token.new(json.dig("access_token"), json.dig("expires_in"), DateTime.now)
+      Token.new(json.dig("access_token"), json.dig("expires_in"), Time.now.utc)
     end
   end
 
