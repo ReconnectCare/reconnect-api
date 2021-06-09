@@ -85,7 +85,7 @@ Rails.application.configure do
     ssl: true,
     enable_starttls_auto: true
   }
-  config.action_mailer.default_url_options = {protocol: "https", host: "staging.reconnectsvcs.com"}
+  config.action_mailer.default_url_options = {protocol: "https", host: "staging.api.reconnectsvcs.com"}
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.

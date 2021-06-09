@@ -65,30 +65,45 @@ class OnDemandClient
   end
 
   def insert_patient od_patient
-    # TODO: Get this API call working
-    #
-    # endpoint = "/api/Patient/"
-    #
-    # params = camelcase_params(od_patient.to_h)
-    #
-    # resp = HTTP.auth("Bearer #{auth_token.token}")
-    #   .headers(accept: "application/json", 'Content-Type': "application/json")
-    #   .post(full_url(endpoint), json: params)
-    0
+    endpoint = "/api/Patient/InsertPatient"
+
+    params = camelcase_params(od_patient.to_h)
+
+    resp = HTTP.auth("Bearer #{auth_token.token}")
+      .headers(accept: "application/json", 'Content-Type': "application/json")
+      .post(full_url(endpoint), json: params)
+
+    if resp.code != 200
+      ExceptionNotifier.notify_exception(
+        RuntimeError.new("On Demand Insert Patient (#{resp.status})", data: {body: resp.body})
+      )
+      return nil
+    end
+
+    resp.parse
   end
 
   def schedule_appointment od_visit
     # TODO: Get this API call working
-    # endpoint = "/api/Appointment/ScheduleVisit"
-    #
-    # params = camelcase_params(od_visit.to_h)
-    #
-    # resp = HTTP.auth("Bearer #{auth_token.token}")
-    #   .headers(accept: "application/json")
-    #   .post(full_url(endpoint), json: params)
-    {
-      "VisitID" => 12551.0, "Token" => nil, "SessionID" => nil
-    }
+    endpoint = "/api/Appointment/ScheduleVisit"
+
+    params = camelcase_params(od_visit.to_h)
+
+    pp params
+
+    resp = HTTP.auth("Bearer #{auth_token.token}")
+      .headers(accept: "application/json", 'Content-Type': "application/json")
+      .post(full_url(endpoint), json: params)
+
+    if resp.code != 200
+      pp resp
+      return nil
+    end
+
+    resp.parse
+    # {
+    #   "VisitID" => 12551.0, "Token" => nil, "SessionID" => nil
+    # }
   end
 
   def get_available_providers state

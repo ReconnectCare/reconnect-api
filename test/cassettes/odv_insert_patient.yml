@@ -1,0 +1,96 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://ondemandapi.ondemandvisit.com/AuthToken
+    body:
+      encoding: UTF-8
+      string: grant_type=password&username=apicall&password=sstdgPC8FoQE52go
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Connection:
+      - close
+      Host:
+      - ondemandapi.ondemandvisit.com
+      User-Agent:
+      - http.rb/4.4.1
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Pragma:
+      - no-cache
+      Content-Type:
+      - application/json;charset=UTF-8
+      Expires:
+      - "-1"
+      Server:
+      - Microsoft-IIS/10.0
+      X-Powered-By:
+      - ASP.NET
+      Date:
+      - Wed, 09 Jun 2021 17:40:10 GMT
+      Connection:
+      - close
+      Content-Length:
+      - '358'
+    body:
+      encoding: UTF-8
+      string: '{"access_token":"ZMiKf3b8aIEDgPd4aT1SUwAaFKV2Uy8yCfrZhGnmkwnfe3VdF-KjsoFGhBgpjh2_pdi-3il6UOWqhqJy9qbnKGrSNiEOQRiHZi317ua40Lt3FZjyxn4yYh2BMupKXxZBxIdm2Ebo117yVL7H0sljalo4A8TdhiAAfiu7PTtqZDEIrEUJJB39h7PiEEgnVePZ0bDe9hprocIeKke3d57jyR3BISt6Ka_HEyuZq5kH27YcKEAnz65Y0s_pU40rZ1fswPEU3b_QN0oXWDdG3RzJupn2oabK9Mv1nkJClgQVzRk","token_type":"bearer","expires_in":1799}'
+  recorded_at: Wed, 09 Jun 2021 17:42:41 GMT
+- request:
+    method: post
+    uri: https://ondemandapi.ondemandvisit.com/api/Patient/InsertPatient
+    body:
+      encoding: UTF-8
+      string: '{"AccountID":"ODV1058","FirstName":"TestFirst","MiddleName":"M","LastName":"TestLast","Dob":"2020-11-03T14:45:42.940581+05:30","Gender":"Male","OfficePhone":null,"CellPhone":"(110)
+        254 2546","EmailID":"test@test.com","Street":"123 main","City":"anytown","State":"CA","Country":239,"Zipcode":"90121","IsEmailVerified":null,"RegThrough":null}'
+    headers:
+      Authorization:
+      - Bearer ZMiKf3b8aIEDgPd4aT1SUwAaFKV2Uy8yCfrZhGnmkwnfe3VdF-KjsoFGhBgpjh2_pdi-3il6UOWqhqJy9qbnKGrSNiEOQRiHZi317ua40Lt3FZjyxn4yYh2BMupKXxZBxIdm2Ebo117yVL7H0sljalo4A8TdhiAAfiu7PTtqZDEIrEUJJB39h7PiEEgnVePZ0bDe9hprocIeKke3d57jyR3BISt6Ka_HEyuZq5kH27YcKEAnz65Y0s_pU40rZ1fswPEU3b_QN0oXWDdG3RzJupn2oabK9Mv1nkJClgQVzRk
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      Connection:
+      - close
+      Host:
+      - ondemandapi.ondemandvisit.com
+      User-Agent:
+      - http.rb/4.4.1
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Pragma:
+      - no-cache
+      Content-Length:
+      - '7'
+      Content-Type:
+      - application/json; charset=utf-8
+      Expires:
+      - "-1"
+      Server:
+      - Microsoft-IIS/10.0
+      X-Aspnet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      Date:
+      - Wed, 09 Jun 2021 17:40:10 GMT
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '28583.0'
+  recorded_at: Wed, 09 Jun 2021 17:42:42 GMT
+recorded_with: VCR 6.0.0

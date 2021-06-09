@@ -17,8 +17,8 @@ ExceptionNotification.configure do |config|
   # Email notifier sends notifications by email.
   config.add_notifier :email, {
     email_prefix: "[Reconnect Api] ",
-    sender_address: %("Dusty" <candland@gmail.com>),
-    exception_recipients: %w[candland@gmail.com]
+    sender_address: %("Dusty" <dusty@red27.net>),
+    exception_recipients: %w[dusty@red27.net]
   }
 
   # Campfire notifier sends notifications to your Campfire room. Requires 'tinder' gem.

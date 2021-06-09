@@ -16,6 +16,11 @@ class OnDemandClientTest < ActiveSupport::TestCase
 
   test "insert_patient" do
     od_patient = OnDemandClient::Patient.new("ODV1058", "TestFirst", "M", "TestLast", "2020-11-03T14:45:42.940581+05:30", "Male", nil, "(110) 254 2546", "test@test.com", "123 main", "anytown", "CA", 239, "90121")
+
+    VCR.use_cassette :odv_insert_patient do
+      id = OnDemandClient.new.insert_patient(od_patient)
+      assert_not_nil id
+    end
   end
 
   test "Visit#create" do
