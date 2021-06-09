@@ -20,4 +20,10 @@ class ConferenceTest < ActiveSupport::TestCase
     assert conference.save
     assert_equal ["+13035551111", "+13035552222"], conference.contestants
   end
+
+  test "duration" do
+    conference = create(:conference, start_time: DateTime.new(2021, 6, 9, 2, 30, 0), end_time: DateTime.new(2021, 6, 9, 2, 45, 30))
+
+    assert_equal 930, conference.duration.seconds
+  end
 end

@@ -31,6 +31,17 @@ class OnDemandClientTest < ActiveSupport::TestCase
     end
   end
 
+  test "Duration#create" do
+    conference = create(:conference, :with_provider, odv_visit_id: "123.11", start_time: DateTime.new(2021, 6, 9, 2, 30, 0), end_time: DateTime.new(2021, 6, 9, 2, 45, 30))
+
+    duration = OnDemandClient::Duration.create(conference)
+
+    assert_equal conference.patient.odv_id, duration.pat_id
+    assert_equal conference.provider.phy_code, duration.phy_code
+    assert_equal conference.odv_visit_id, duration.visit_id
+    assert_equal 930, duration.duration_seconds
+  end
+
   test "Visit#create" do
     conference = create(:conference, :with_provider)
 

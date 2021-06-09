@@ -35,4 +35,9 @@ class Conference < ApplicationRecord
     number = conference_number.number
     "tel:#{number}"
   end
+
+  def duration
+    return 0 if end_time.nil?
+    end_time - start_time
+  end
 end

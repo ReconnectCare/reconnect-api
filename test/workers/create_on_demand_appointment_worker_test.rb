@@ -15,9 +15,8 @@ class CreateOnDemandAppointmentWorkerTest < ActiveSupport::TestCase
 
     assert_mock mock
 
-    patient = @conference.patient
-    patient.reload
+    @conference.reload
 
-    assert_equal "1", patient.odv_visit_id
+    assert_equal "1", @conference.odv_visit_id
   end
 end

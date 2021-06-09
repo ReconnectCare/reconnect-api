@@ -9,6 +9,20 @@ class OnDemandClient
 
   Provider = Struct.new(:user_id, :start_time, :close_time, :provider_name, :phy_code, :cell_phone)
 
+  Duration = Struct.new(:pat_id, :phy_code, :visit_id, :duration_seconds) do
+    def self.create conference
+      patient = conference.patient
+      provider = conference.provider
+
+      OnDemandClient::Duration.new(
+        patient.odv_id,
+        provider.phy_code,
+        conference.odv_visit_id,
+        conference.duration.seconds
+      )
+    end
+  end
+
   Patient = Struct.new(:account_id, :first_name, :middle_name, :last_name, :dob, :gender, :office_phone, :cell_phone, :email_id, :street, :city, :state, :country, :zipcode, :is_email_verified, :reg_through) do
     def self.from_patient patient
       OnDemandClient::Patient.new(
@@ -62,6 +76,11 @@ class OnDemandClient
       @@token = nil
     end
     @@token ||= refresh_token
+  end
+
+  def send_duration od_duration
+    # TODO implement send duration API call
+    0
   end
 
   def insert_patient od_patient

@@ -70,8 +70,7 @@ class Hooks::VoiceController < Hooks::HooksController
       if conference.provider.nil?
         conference.update!(provider: Provider.find_by(cell_phone: caller_number))
         voice_call.update!(reason: VoiceCall::Reasons.provider_selected)
-        # TODO: Schedule visit
-        # CreateOnDemandAppointmentWorker.perform_async(conference.id)
+        CreateOnDemandAppointmentWorker.perform_async(conference.id)
 
         join_conference conference
       else
@@ -110,8 +109,8 @@ class Hooks::VoiceController < Hooks::HooksController
     when "conference-start"
       conference.update!(status: Conference::Statuses.in_progress)
     when "conference-end"
-      # TODO Send conference duration to OnDemandClient
       conference.update!(end_time: DateTime.now, status: Conference::Statuses.completed)
+      SendDurationToOnDemandWorker.perform_async conference.id
     end
 
     render xml: builder.to_s

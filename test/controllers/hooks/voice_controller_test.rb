@@ -259,7 +259,10 @@ class Hooks::VoiceControllerTest < ActionDispatch::IntegrationTest
     url = hooks_voice_respond_url(@conference.id)
     headers = sig_header(url, params)
 
-    post url, headers: headers, params: params
+    assert_difference "CreateOnDemandAppointmentWorker.jobs.count" => 1 do
+      post url, headers: headers, params: params
+    end
+
     assert_response :success
     assert_match "xml version", response.body
     assert_match "Dial", response.body
@@ -304,7 +307,9 @@ class Hooks::VoiceControllerTest < ActionDispatch::IntegrationTest
   test "status should be completed on conference-end" do
     voice_call = create(:voice_call, provider_id: "CA880f7345eb289212fd6e5364ca6a615d")
 
-    send_status @conference, "conference-end"
+    assert_difference "SendDurationToOnDemandWorker.jobs.count" => 1 do
+      send_status @conference, "conference-end"
+    end
 
     @conference.reload
 
