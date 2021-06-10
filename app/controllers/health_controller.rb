@@ -49,8 +49,7 @@ class HealthController < ApplicationController
   def redis
     redis_config = {url: Rails.application.credentials.dig(:redis, :url) || "redis://localhost:6379/1"}
     redis = Redis.new(redis_config)
-    result = redis.hello
-    [redis.ping == "PONG", redis.hello]
+    [redis.ping == "PONG", {}]
   rescue => e
     [false, {
       message: e.message,
