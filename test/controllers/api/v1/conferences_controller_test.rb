@@ -117,7 +117,7 @@ class ConferencesControllerTest < ActionDispatch::IntegrationTest
       assert_response :unprocessable_entity
 
       assert_equal "providers", response.parsed_body["message"]
-      assert_equal "no available providers for MyString.", response.parsed_body["errors"][0]
+      assert_equal "no available providers for CA.", response.parsed_body["errors"][0]
     end
   end
 

@@ -12,8 +12,8 @@ FactoryBot.define do
     street { "MyString" }
     street_2 { "MyString" }
     city { "MyString" }
-    state { "MyString" }
-    zipcode { "MyString" }
+    state { "CA" }
+    zipcode { "89023" }
     odv_id { "1002.3" }
   end
 end
