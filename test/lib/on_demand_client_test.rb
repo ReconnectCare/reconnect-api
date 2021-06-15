@@ -17,9 +17,23 @@ class OnDemandClientTest < ActiveSupport::TestCase
 
   test "schedule_appointment" do
     conference = create(:conference, :with_provider)
-    visit = OnDemandClient::Visit.create(conference)
 
-    # OnDemandClient.new.schedule_appointment visit
+    visit = OnDemandClient::Visit.create(conference)
+    visit.phy_code = "JH2572"
+    visit.pat_id = 111.33
+    visit.patient_name = "DEMOAPIgreg TESTgreg"
+    visit.reason = "Covid Symptoms"
+    visit.app_type = "Video"
+    visit.phone_no = "(100) 000-0000"
+    visit.current_location = "CA"
+    visit.current_state = "CA"
+
+    pp visit
+
+    VCR.use_cassette :ondemand_schedule_appointment do
+      pp OnDemandClient.new.schedule_appointment visit
+      pp OnDemandClient.new.auth_token
+    end
   end
 
   test "insert_patient" do
@@ -67,7 +81,6 @@ class OnDemandClientTest < ActiveSupport::TestCase
 
     od_patient = OnDemandClient::Patient.from_patient(patient)
 
-    assert_equal "ODV1058", od_patient.account_id
     assert_equal patient.first_name, od_patient.first_name
     assert_equal patient.middle_name, od_patient.middle_name
     assert_equal patient.last_name, od_patient.last_name

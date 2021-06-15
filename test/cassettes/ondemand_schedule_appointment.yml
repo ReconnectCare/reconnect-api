@@ -1,0 +1,96 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://ondemandapi.ondemandvisit.com/AuthToken
+    body:
+      encoding: UTF-8
+      string: grant_type=password&username=apicall&password=sstdgPC8FoQE52go
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Connection:
+      - close
+      Host:
+      - ondemandapi.ondemandvisit.com
+      User-Agent:
+      - http.rb/4.4.1
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Pragma:
+      - no-cache
+      Content-Type:
+      - application/json;charset=UTF-8
+      Expires:
+      - "-1"
+      Server:
+      - Microsoft-IIS/10.0
+      X-Powered-By:
+      - ASP.NET
+      Date:
+      - Mon, 14 Jun 2021 22:06:59 GMT
+      Connection:
+      - close
+      Content-Length:
+      - '358'
+    body:
+      encoding: UTF-8
+      string: '{"access_token":"hVwo2DtXIYhrjG9xyntltSHEOOSJifNk_RbwsXgU-pEF8eljPR_WCtusFgZQCfQPQG8Quz-Ywk16QYmVFzE3dmN6mqeaeL2sbpT74-TlyLY4mbtlTo19L5TqZGcyHTJDBE1Unsqlp9AgkRoHXCHSiULJCGbIgL7SVQeoSr0wjOmY2No9-m9ADzVHa6OboYkhG1DC9ZtdHgD5_wGZaB_X9cGXGXNZfW2H5pFZTZ_clImAjn2S74-JuZrsd1rOlHASlgJk16lNr2RlukU4ROLVTj0Br2hOs1zTCiwGQYbeAik","token_type":"bearer","expires_in":1799}'
+  recorded_at: Mon, 14 Jun 2021 22:09:34 GMT
+- request:
+    method: post
+    uri: https://ondemandapi.ondemandvisit.com/api/Appointment/ScheduleVisit?AccountId=ODV1058
+    body:
+      encoding: UTF-8
+      string: '{"PatID":111.33,"PatientName":"DEMOAPIgreg TESTgreg","Reason":"Covid
+        Symptoms","AppType":"Video","PhoneNo":"(100) 000-0000","PhyCode":"JH2572","Latitude":"","Longitude":"","CurrentLocation":"CA","CurrentState":"CA","patientPlatform":"API","patPlatformDesc":"API","CreatedFrom":3}'
+    headers:
+      Authorization:
+      - Bearer hVwo2DtXIYhrjG9xyntltSHEOOSJifNk_RbwsXgU-pEF8eljPR_WCtusFgZQCfQPQG8Quz-Ywk16QYmVFzE3dmN6mqeaeL2sbpT74-TlyLY4mbtlTo19L5TqZGcyHTJDBE1Unsqlp9AgkRoHXCHSiULJCGbIgL7SVQeoSr0wjOmY2No9-m9ADzVHa6OboYkhG1DC9ZtdHgD5_wGZaB_X9cGXGXNZfW2H5pFZTZ_clImAjn2S74-JuZrsd1rOlHASlgJk16lNr2RlukU4ROLVTj0Br2hOs1zTCiwGQYbeAik
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      Connection:
+      - close
+      Host:
+      - ondemandapi.ondemandvisit.com
+      User-Agent:
+      - http.rb/4.4.1
+  response:
+    status:
+      code: 500
+      message: Internal Server Error
+    headers:
+      Cache-Control:
+      - no-cache
+      Pragma:
+      - no-cache
+      Content-Length:
+      - '98'
+      Content-Type:
+      - application/json; charset=utf-8
+      Expires:
+      - "-1"
+      Server:
+      - Microsoft-IIS/10.0
+      X-Aspnet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      Date:
+      - Mon, 14 Jun 2021 22:07:01 GMT
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"Message":"Invalid Patient Details\r\nParameter name: PatID","MessageDetails":null,"Errors":null}'
+  recorded_at: Mon, 14 Jun 2021 22:09:36 GMT
+recorded_with: VCR 6.0.0

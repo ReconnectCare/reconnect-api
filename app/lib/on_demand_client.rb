@@ -23,10 +23,9 @@ class OnDemandClient
     end
   end
 
-  Patient = Struct.new(:account_id, :first_name, :middle_name, :last_name, :dob, :gender, :office_phone, :cell_phone, :email_id, :street, :city, :state, :country, :zipcode, :is_email_verified, :reg_through) do
+  Patient = Struct.new(:first_name, :middle_name, :last_name, :dob, :gender, :office_phone, :cell_phone, :email_id, :street, :city, :state, :country, :zipcode, :is_email_verified, :reg_through) do
     def self.from_patient patient
       OnDemandClient::Patient.new(
-        "ODV1058",
         patient.first_name,
         patient.middle_name,
         patient.last_name,
@@ -46,7 +45,7 @@ class OnDemandClient
     end
   end
 
-  Visit = Struct.new(:pat_id, :patient_name, :reason, :app_type, :phone_no, :phy_code, :latitude, :longitude, :current_location, :current_state, :patient_platform, :pat_platform_desc, :created_from) do
+  Visit = Struct.new(:pat_id, :patient_name, :reason, :app_type, :phone_no, :phy_code, :latitude, :longitude, :current_location, :current_state, :_patient_platform, :_pat_platform_desc, :created_from) do
     def self.create conference
       patient = conference.patient
       provider = conference.provider
@@ -58,8 +57,8 @@ class OnDemandClient
         "API",
         patient.cell_phone,
         provider.phy_code,
-        0,
-        0,
+        "",
+        "",
         patient.state,
         patient.state,
         "API",
@@ -106,13 +105,15 @@ class OnDemandClient
     # TODO: Get this API call working
     endpoint = "/api/Appointment/ScheduleVisit"
 
-    params = camelcase_params(od_visit.to_h)
+    params = {AccountId: "ODV1058"}
 
-    pp params
+    json = camelcase_params(od_visit.to_h)
+
+    pp json
 
     resp = HTTP.auth("Bearer #{auth_token.token}")
       .headers(accept: "application/json", 'Content-Type': "application/json")
-      .post(full_url(endpoint), json: params)
+      .post(full_url(endpoint), params: params, json: json)
 
     if resp.code != 200
       pp resp
@@ -184,9 +185,16 @@ class OnDemandClient
 
   def camelcase_params hash
     hash.each_with_object({}) { |(k, v), memo|
-      name = k.to_s.camelcase
+      base_name = k.to_s
+      name = base_name.camelcase
       name = name.sub(/Id\z/, "ID") if name.ends_with?("Id")
+      name = lower_first_letter(name) if base_name.starts_with?("_")
       memo[name] = v
     }
+  end
+
+  def lower_first_letter str
+    str[0] = str[0].downcase
+    str
   end
 end
