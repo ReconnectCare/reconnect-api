@@ -9,20 +9,6 @@ class OnDemandClient
 
   Provider = Struct.new(:user_id, :start_time, :close_time, :provider_name, :phy_code, :cell_phone)
 
-  Duration = Struct.new(:pat_id, :phy_code, :visit_id, :duration_seconds) do
-    def self.create conference
-      patient = conference.patient
-      provider = conference.provider
-
-      OnDemandClient::Duration.new(
-        patient.odv_id,
-        provider.phy_code,
-        conference.odv_visit_id,
-        conference.duration.seconds
-      )
-    end
-  end
-
   Patient = Struct.new(:first_name, :middle_name, :last_name, :dob, :gender, :office_phone, :cell_phone, :email_id, :street, :city, :state, :country, :zipcode, :is_email_verified, :reg_through) do
     def self.from_patient patient
       OnDemandClient::Patient.new(
@@ -41,6 +27,39 @@ class OnDemandClient
         patient.zipcode,
         true,
         11
+      )
+    end
+  end
+
+  CompletedVisit = Struct.new(:pat_id, :patient_name, :reason, :app_type, :phone_no, :phy_code, :visit_start_date_time,
+    :visit_join_date_time, :visit_end_date_time, :is_visit_end, :latitude, :longitude,
+    :current_location, :current_state, :_patient_platform, :_pat_platform_desc, :created_from) do
+    def self.create conference
+      patient = conference.patient
+      provider = conference.provider
+
+      if conference.start_time.nil? || conference.end_time.nil? || conference.joined_time.nil?
+        raise "Conference not completed yet."
+      end
+
+      OnDemandClient::CompletedVisit.new(
+        patient.odv_id,
+        "#{patient.first_name} #{patient.last_name}",
+        conference.reason,
+        "API",
+        patient.cell_phone,
+        provider.phy_code,
+        conference.start_time.iso8601,
+        conference.joined_time.iso8601,
+        conference.end_time.iso8601,
+        true,
+        "",
+        "",
+        patient.state,
+        patient.state,
+        "API",
+        "API",
+        3
       )
     end
   end
@@ -68,6 +87,17 @@ class OnDemandClient
     end
   end
 
+  VisitResponse = Struct.new(:visit_id, :token, :session_id, :patient_meeting_link) do
+    def self.from_json json
+      OnDemandClient::VisitResponse.new(
+        json["VisitID"],
+        json["Token"],
+        json["SessionID"],
+        json["PatientMeetingLink"]
+      )
+    end
+  end
+
   @@token = nil
 
   def auth_token
@@ -77,9 +107,8 @@ class OnDemandClient
     @@token ||= refresh_token
   end
 
-  def send_duration od_duration
-    # TODO implement send duration API call
-    0
+  def reset_token!
+    @@token = nil
   end
 
   def insert_patient od_patient
@@ -102,14 +131,11 @@ class OnDemandClient
   end
 
   def schedule_appointment od_visit
-    # TODO: Get this API call working
     endpoint = "/api/Appointment/ScheduleVisit"
 
     params = {AccountId: "ODV1058"}
 
     json = camelcase_params(od_visit.to_h)
-
-    pp json
 
     resp = HTTP.auth("Bearer #{auth_token.token}")
       .headers(accept: "application/json", 'Content-Type': "application/json")
@@ -120,10 +146,7 @@ class OnDemandClient
       return nil
     end
 
-    resp.parse
-    # {
-    #   "VisitID" => 12551.0, "Token" => nil, "SessionID" => nil
-    # }
+    OnDemandClient::VisitResponse.from_json(resp.parse)
   end
 
   def get_available_providers state

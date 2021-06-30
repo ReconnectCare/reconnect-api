@@ -4,8 +4,8 @@ class CreateOnDemandAppointmentWorker < ApplicationWorker
 
     od_visit = OnDemandClient::Visit.create(conference)
 
-    visit_id = OnDemandClient.new.schedule_appointment od_visit
+    resp = OnDemandClient.new.schedule_appointment od_visit
 
-    conference.update!(odv_visit_id: visit_id)
+    conference.update!(odv_visit_id: resp.visit_id)
   end
 end

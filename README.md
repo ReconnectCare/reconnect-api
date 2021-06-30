@@ -169,3 +169,28 @@ API
       "created_at": "2021-06-10T15:10:26.987Z",
       "updated_at": "2021-06-10T15:10:26.987Z"
     }
+
+
+
+curl --location --request POST 'https://ondemandapi.ondemandvisit.com/api/Appointment/ScheduleVisit?AccountID=ODV1058' \
+--header 'Authorization: Bearer -9hh8JPZj5HXvTovHCSu2PVKLfa-27xgkhUi8FMC6-tQZa-j304rfv_eTySW3AnU_sPextdI-2oq8rE7993NR9miH076LIGtWPvOTdqA9bpjACW0DB6osSv1NCR_EoHx8v9NhUm37_8YBe-3uTckuG6wxif5fE7I6_plFCrTl2WHV2pkb9JtL9DtsyM2EpFIrUe_KZl4gX898Aa2Yx86CaAr0LfCatd6Zv4eXE2G_1eC6f_k9JInGLKbOmoDP1lLpfxleIm_QBnjl1Jj16d1a89SlSzzGy7IODqMrg8_ELQ' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "PatID": 27769,
+  "PatientName": "DEMOAPI TEST",
+  "Reason": "Covid Symptoms",
+  "AppType": "Video",
+  "PhoneNo": "(100) 000-0000",
+  "PhyCode": "TP1548",
+  "VisitStartDateTime": "2021-06-28T07:26:36.825399-07:00",
+  "VisitJoinDateTime": "2021-06-28T07:27:36.825399-07:00",
+  "VisitEndDateTime": "2021-06-28T07:45:36.825399-07:00",
+  "IsVisitEnd":true,
+  "Latitude": "sample string 19",
+  "Longitude": "sample string 20",
+  "CurrentLocation": "CA",
+  "CurrentState": "CA",
+  "patientPlatform": "sample string 29",
+  "patPlatformDesc": "sample string 30",
+  "CreatedFrom": 3
+}'

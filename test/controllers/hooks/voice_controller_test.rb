@@ -259,9 +259,7 @@ class Hooks::VoiceControllerTest < ActionDispatch::IntegrationTest
     url = hooks_voice_respond_url(@conference.id)
     headers = sig_header(url, params)
 
-    assert_difference "CreateOnDemandAppointmentWorker.jobs.count" => 1 do
-      post url, headers: headers, params: params
-    end
+    post url, headers: headers, params: params
 
     assert_response :success
     assert_match "xml version", response.body
@@ -288,6 +286,7 @@ class Hooks::VoiceControllerTest < ActionDispatch::IntegrationTest
     @conference.reload
 
     assert_equal "CF3930fd282149bfb30540168946cb0577", @conference.sid
+    assert_not_nil @conference.joined_time
 
     assert voice_call.reload
     assert VoiceCall::Reasons.joined, voice_call.status
@@ -307,7 +306,7 @@ class Hooks::VoiceControllerTest < ActionDispatch::IntegrationTest
   test "status should be completed on conference-end" do
     voice_call = create(:voice_call, provider_id: "CA880f7345eb289212fd6e5364ca6a615d")
 
-    assert_difference "SendDurationToOnDemandWorker.jobs.count" => 1 do
+    assert_difference "CompleteOnDemandAppointmentWorker.jobs.count" => 1 do
       send_status @conference, "conference-end"
     end
 

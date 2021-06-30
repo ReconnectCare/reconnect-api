@@ -7,7 +7,7 @@ class CreateOnDemandAppointmentWorkerTest < ActiveSupport::TestCase
 
   test "perform" do
     mock = Minitest::Mock.new
-    mock.expect :schedule_appointment, 1, [OnDemandClient::Visit]
+    mock.expect :schedule_appointment, OnDemandClient::VisitResponse.new(1, nil, nil, nil), [OnDemandClient::Visit]
 
     OnDemandClient.stub :new, mock do
       CreateOnDemandAppointmentWorker.new.perform(@conference.id)
