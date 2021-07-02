@@ -6,7 +6,7 @@ class ConferenceNumbersControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = create(:user)
     sign_in @user.reload
-    @conference_number = create(:conference_number)
+    @conference_number = create(:conference_number, sid: "PNb96744510b9834b3fddb65cbc7196d11")
   end
 
   test "should get index" do
@@ -20,8 +20,10 @@ class ConferenceNumbersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create conference_number" do
-    assert_difference("ConferenceNumber.count") do
-      post conference_numbers_url, params: {conference_number: attributes_for(:conference_number)}
+    VCR.use_cassette :twilio_incoming_phone_numbers do
+      assert_difference("ConferenceNumber.count") do
+        post conference_numbers_url, params: {conference_number: attributes_for(:conference_number)}
+      end
     end
 
     assert_redirected_to conference_number_url(ConferenceNumber.order(created_at: :asc).last)
@@ -32,19 +34,11 @@ class ConferenceNumbersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get edit" do
-    get edit_conference_number_url(@conference_number)
-    assert_response :success
-  end
-
-  test "should update conference_number" do
-    patch conference_number_url(@conference_number), params: {conference_number: attributes_for(:conference_number)}
-    assert_redirected_to conference_number_url(@conference_number)
-  end
-
   test "should destroy conference_number" do
-    assert_difference("ConferenceNumber.count", -1) do
-      delete conference_number_url(@conference_number)
+    VCR.use_cassette :twilio_incoming_phone_numbers_delete do
+      assert_difference("ConferenceNumber.count", -1) do
+        delete conference_number_url(@conference_number)
+      end
     end
 
     assert_redirected_to conference_numbers_url

@@ -139,7 +139,7 @@ class Hooks::VoiceController < Hooks::HooksController
     provider_voice_greating = Setting.get("provider_voice_greating", "Press 1 to join the conference.")
     provider_voice_greating = Setting.render(provider_voice_greating, {conference: conference})
 
-    builder.gather(action: hooks_voice_respond_url(conference, URL_OPTIONS), input: :dtmf, numDigits: 1, actionOnEmptyResult: true) do |gather|
+    builder.gather(action: hooks_voice_respond_url(conference, TwilioClient.url_options), input: :dtmf, numDigits: 1, actionOnEmptyResult: true) do |gather|
       gather.say(message: provider_voice_greating)
     end
   end
@@ -161,10 +161,10 @@ class Hooks::VoiceController < Hooks::HooksController
       dial.conference(conference.id.to_s,
         max_participants: 2,
         status_callback_event: "start end join leave mute hold",
-        status_callback: hooks_voice_status_url(conference, URL_OPTIONS),
+        status_callback: hooks_voice_status_url(conference, TwilioClient.url_options),
         record: true,
         recording_status_callback_event: "completed",
-        recording_status_callback: hooks_voice_recorded_url(conference, URL_OPTIONS))
+        recording_status_callback: hooks_voice_recorded_url(conference, TwilioClient.url_options))
     end
   end
 

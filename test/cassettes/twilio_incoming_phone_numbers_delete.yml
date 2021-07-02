@@ -1,0 +1,60 @@
+---
+http_interactions:
+- request:
+    method: delete
+    uri: https://api.twilio.com/2010-04-01/Accounts/AC13816613a08b39cfa7b42ee9505fa77d/IncomingPhoneNumbers/PNb96744510b9834b3fddb65cbc7196d11.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - twilio-ruby/5.53.0 (ruby/x86_64-darwin19 2.7.1-p83)
+      Accept-Charset:
+      - utf-8
+      Accept:
+      - application/json
+      Authorization:
+      - Basic QUMxMzgxNjYxM2EwOGIzOWNmYTdiNDJlZTk1MDVmYTc3ZDozZmI4ODY3ZTc1ZTliMTFmZDgyZDgxOWU1MDdlMjY0ZQ==
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 204
+      message: No Content
+    headers:
+      Date:
+      - Fri, 02 Jul 2021 19:09:49 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Connection:
+      - keep-alive
+      Twilio-Request-Id:
+      - RQb2774b53be15ff4f06ef91c547b33554
+      Twilio-Request-Duration:
+      - '0.389'
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - Accept, Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match,
+        If-Unmodified-Since
+      Access-Control-Allow-Methods:
+      - GET, POST, DELETE, OPTIONS
+      Access-Control-Expose-Headers:
+      - ETag
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Powered-By:
+      - AT-5000
+      X-Shenanigans:
+      - none
+      X-Home-Region:
+      - us1
+      X-Api-Domain:
+      - api.twilio.com
+      Strict-Transport-Security:
+      - max-age=31536000
+    body:
+      encoding: UTF-8
+      string: ''
+  recorded_at: Fri, 02 Jul 2021 19:09:49 GMT
+recorded_with: VCR 6.0.0

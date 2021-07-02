@@ -1,0 +1,78 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.twilio.com/2010-04-01/Accounts/AC13816613a08b39cfa7b42ee9505fa77d/IncomingPhoneNumbers.json
+    body:
+      encoding: UTF-8
+      string: AreaCode&FriendlyName=Test+Conf+Number&StatusCallback=https%3A%2F%2Fcandland.ngrok.io%2Fhooks%2Fvoice%2Fcall_status&VoiceUrl=https%3A%2F%2Fcandland.ngrok.io%2Fhooks%2Fvoice
+    headers:
+      User-Agent:
+      - twilio-ruby/5.53.0 (ruby/x86_64-darwin19 2.7.1-p83)
+      Accept-Charset:
+      - utf-8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept:
+      - application/json
+      Authorization:
+      - Basic QUMxMzgxNjYxM2EwOGIzOWNmYTdiNDJlZTk1MDVmYTc3ZDozZmI4ODY3ZTc1ZTliMTFmZDgyZDgxOWU1MDdlMjY0ZQ==
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Fri, 02 Jul 2021 19:03:53 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '1144'
+      Connection:
+      - keep-alive
+      Twilio-Concurrent-Requests:
+      - '1'
+      Twilio-Request-Id:
+      - RQd852b52912399fd4c3081117edb92e18
+      Twilio-Request-Duration:
+      - '1.417'
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - Accept, Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match,
+        If-Unmodified-Since
+      Access-Control-Allow-Methods:
+      - GET, POST, DELETE, OPTIONS
+      Access-Control-Expose-Headers:
+      - ETag
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Powered-By:
+      - AT-5000
+      X-Shenanigans:
+      - none
+      X-Home-Region:
+      - us1
+      X-Api-Domain:
+      - api.twilio.com
+      Strict-Transport-Security:
+      - max-age=31536000
+    body:
+      encoding: UTF-8
+      string: '{"sid": "PNb96744510b9834b3fddb65cbc7196d11", "account_sid": "AC13816613a08b39cfa7b42ee9505fa77d",
+        "friendly_name": "Test Conf Number", "phone_number": "+15303850076", "voice_url":
+        "https://candland.ngrok.io/hooks/voice", "voice_method": "POST", "voice_fallback_url":
+        null, "voice_fallback_method": "POST", "voice_caller_id_lookup": false, "date_created":
+        "Fri, 02 Jul 2021 19:03:52 +0000", "date_updated": "Fri, 02 Jul 2021 19:03:52
+        +0000", "sms_url": "", "sms_method": "POST", "sms_fallback_url": "", "sms_fallback_method":
+        "POST", "address_requirements": "none", "beta": false, "capabilities": {"voice":
+        true, "sms": true, "mms": true}, "status_callback": "https://candland.ngrok.io/hooks/voice/call_status",
+        "status_callback_method": "POST", "api_version": "2010-04-01", "voice_application_sid":
+        null, "sms_application_sid": "", "origin": "twilio", "trunk_sid": null, "emergency_status":
+        "Inactive", "emergency_address_sid": null, "address_sid": null, "identity_sid":
+        null, "bundle_sid": null, "uri": "/2010-04-01/Accounts/AC13816613a08b39cfa7b42ee9505fa77d/IncomingPhoneNumbers/PNb96744510b9834b3fddb65cbc7196d11.json",
+        "status": "in-use"}'
+  recorded_at: Fri, 02 Jul 2021 19:03:53 GMT
+recorded_with: VCR 6.0.0

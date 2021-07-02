@@ -1,8 +1,10 @@
 == render "shared/page_header", title: "New Conference Number" do
-  =< link_to 'Edit', edit_conference_number_path(@conference_number)
   =< link_to 'Back', conference_numbers_path
 
 .panel
+  p
+    strong SID:
+    = @conference_number.sid
   p
     strong Number:
     = @conference_number.number.phony_formatted

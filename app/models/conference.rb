@@ -36,6 +36,10 @@ class Conference < ApplicationRecord
     "tel:#{number}"
   end
 
+  def patient_first_name
+    patient&.first_name
+  end
+
   def duration
     return 0 if end_time.nil?
     end_time - start_time

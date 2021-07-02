@@ -144,7 +144,8 @@ class OnDemandClient
 
     if resp.code != 200
       ExceptionNotifier.notify_exception(
-        RuntimeError.new("On Demand Insert Patient (#{resp.status})", data: {body: resp.body})
+        RuntimeError.new("On Demand Insert Patient (#{resp.status})"),
+        data: {body: resp.body.to_s}
       )
       return nil
     end
@@ -164,7 +165,10 @@ class OnDemandClient
       .post(full_url(endpoint), params: params, json: json)
 
     if resp.code != 200
-      pp resp
+      ExceptionNotifier.notify_exception(
+        RuntimeError.new("On Demand ScheduleVisit (#{resp.status})"),
+        data: {body: resp.body.to_s}
+      )
       return nil
     end
 
@@ -186,7 +190,8 @@ class OnDemandClient
 
     if resp.code != 200
       ExceptionNotifier.notify_exception(
-        RuntimeError.new("On Demand Available Providers (#{resp.status})", data: {body: resp.body})
+        RuntimeError.new("On Demand Available Providers (#{resp.status})"),
+        data: {body: resp.body.to_s}
       )
       return nil
     end

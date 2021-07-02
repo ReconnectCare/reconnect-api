@@ -4,11 +4,13 @@ class SaveProvider
   end
 
   def call
-    provider = Provider.find_or_initialize_by(external_id: @odv_provider.user_id) do |provider|
-      provider.name = @odv_provider.provider_name
-      provider.phy_code = @odv_provider.phy_code
-      provider.cell_phone = @odv_provider.cell_phone
-    end
+    provider = Provider.find_or_initialize_by(external_id: @odv_provider.user_id)
+
+    # Always update with ODV data
+    provider.name = @odv_provider.provider_name
+    provider.phy_code = @odv_provider.phy_code
+    provider.cell_phone = @odv_provider.cell_phone
+
     provider.save!
     provider
   end

@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   resources :conferences
   resources :patients
   resources :providers
-  resources :conference_numbers
+  resources :conference_numbers, except: [:update, :edit]
   resources :api_tokens
   resources :text_messages, only: [:index, :show]
 
