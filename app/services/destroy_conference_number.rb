@@ -8,7 +8,7 @@ class DestroyConferenceNumber
 
     twilio.incoming_phone_numbers(sid).delete
 
-    "Destroy #{@conference_number.destroy}"
+    @conference_number.discard
   rescue => e
     puts e
     ExceptionNotifier.notify_exception(

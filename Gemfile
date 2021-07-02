@@ -44,6 +44,7 @@ gem "http"
 gem "versionist"
 gem "twilio-ruby"
 gem "phony_rails"
+gem "discard", "~> 1.2"
 
 # Emails
 gem "inky-rb", require: "inky"

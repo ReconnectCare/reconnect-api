@@ -36,10 +36,14 @@ class ConferenceNumbersControllerTest < ActionDispatch::IntegrationTest
 
   test "should destroy conference_number" do
     VCR.use_cassette :twilio_incoming_phone_numbers_delete do
-      assert_difference("ConferenceNumber.count", -1) do
+      assert_difference("ConferenceNumber.count", 0) do
         delete conference_number_url(@conference_number)
       end
     end
+
+    @conference_number.reload
+
+    assert @conference_number.discarded?
 
     assert_redirected_to conference_numbers_url
   end

@@ -8,11 +8,12 @@ class DestroyConferenceNumberTest < ActiveSupport::TestCase
     )
 
     VCR.use_cassette :twilio_incoming_phone_numbers_delete do
-      assert_difference "ConferenceNumber.count" => -1 do
+      assert_difference "ConferenceNumber.count" => 0 do
         assert DestroyConferenceNumber.new(conference_number).call
       end
     end
 
-    assert_equal 0, ConferenceNumber.where(sid: "PNb96744510b9834b3fddb65cbc7196d11").count
+    conference_number.reload
+    assert conference_number.discarded?
   end
 end

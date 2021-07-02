@@ -3,8 +3,11 @@
 
 .panel
   p
+    strong Discarded:
+    =< @conference_number.discarded?
+  p
     strong SID:
-    = @conference_number.sid
+    =< @conference_number.sid
   p
     strong Number:
-    = @conference_number.number.phony_formatted
+    =< @conference_number.number.phony_formatted
