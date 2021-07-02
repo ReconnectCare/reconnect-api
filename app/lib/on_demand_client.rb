@@ -7,7 +7,29 @@ class OnDemandClient
     end
   end
 
-  Provider = Struct.new(:user_id, :start_time, :close_time, :provider_name, :phy_code, :cell_phone)
+  Provider = Struct.new(:user_id, :start_time, :close_time, :provider_name, :phy_code, :cell_phone) do
+    def self.from_json json
+      Provider.new(
+        json.dig("UserID"),
+        json.dig("StartTime"),
+        json.dig("CloseTime"),
+        json.dig("ProviderName"),
+        json.dig("PhyCode"),
+        json.dig("Cellphone")
+      )
+    end
+
+    def to_json
+      {
+        "UserID" => user_id,
+        "StartTime" => start_time,
+        "CloseTime" => close_time,
+        "ProviderName" => provider_name,
+        "PhyCode" => phy_code,
+        "Cellphone" => cell_phone
+      }
+    end
+  end
 
   Patient = Struct.new(:first_name, :middle_name, :last_name, :dob, :gender, :office_phone, :cell_phone, :email_id, :street, :city, :state, :country, :zipcode, :is_email_verified, :reg_through) do
     def self.from_patient patient
@@ -172,14 +194,7 @@ class OnDemandClient
     json = resp.parse
 
     json.map { |data|
-      Provider.new(
-        data.dig("UserID"),
-        data.dig("StartTime"),
-        data.dig("CloseTime"),
-        data.dig("ProviderName"),
-        data.dig("PhyCode"),
-        data.dig("Cellphone")
-      )
+      OnDemandClient::Provider.from_json(data)
     }
   end
 

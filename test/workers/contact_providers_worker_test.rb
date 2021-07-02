@@ -9,7 +9,7 @@ class ContactProvidersWorkerTest < ActiveSupport::TestCase
     conference = create(:conference)
 
     assert_difference "TextMessage.count" => 1, "Provider.count" => 1, "SendTextMessageWorker.jobs.count" => 1 do
-      ContactProvidersWorker.new.perform(conference.id, [@odv_provider])
+      ContactProvidersWorker.new.perform(conference.id, [@odv_provider.to_json])
     end
 
     assert conference.reload
@@ -29,15 +29,15 @@ class ContactProvidersWorkerTest < ActiveSupport::TestCase
     provider1 = OnDemandClient::Provider.new(1113.0, nil, nil, "Jonathan Hinds", "JH2572", "(420) 289-7729")
     provider2 = OnDemandClient::Provider.new(1114.0, nil, nil, "Jonathan Hinds", "JH2572", "(420) 289-7729")
 
-    contestants = ContactProvidersWorker.new.get_contestants([@odv_provider, provider1, provider2])
+    contestants = ContactProvidersWorker.new.get_contestants([@odv_provider.to_json, provider1.to_json, provider2.to_json])
     assert_equal providers_to_attempt, contestants.count
     assert_contestants contestants
 
-    contestants = ContactProvidersWorker.new.get_contestants([provider1, provider2])
+    contestants = ContactProvidersWorker.new.get_contestants([provider1.to_json, provider2.to_json])
     assert_equal providers_to_attempt, contestants.count
     assert_contestants contestants
 
-    contestants = ContactProvidersWorker.new.get_contestants([provider2])
+    contestants = ContactProvidersWorker.new.get_contestants([provider2.to_json])
     assert_equal 1, contestants.count
     assert_contestants contestants
   end

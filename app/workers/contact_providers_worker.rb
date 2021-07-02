@@ -1,7 +1,8 @@
 class ContactProvidersWorker
   include Sidekiq::Worker
 
-  def perform(conference_id, providers)
+  def perform(conference_id, providers_json)
+    providers = providers_json.map { |json| OnDemandClient::Provider.from_json(json) }
     providers.each do |provider|
       SaveProvider.new(provider).call
     end

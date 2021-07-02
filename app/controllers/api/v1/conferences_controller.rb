@@ -31,7 +31,7 @@ class Api::V1::ConferencesController < Api::ApiController
     end
 
     if @conference.save
-      ContactProvidersWorker.perform_async(@conference.id, providers)
+      ContactProvidersWorker.perform_async(@conference.id, providers.map { |p| p.to_json })
       render :show
     else
       raise Exceptions::ApiDataError.new("conference").set_errors(@conference.errors.messages).set_status(422)
