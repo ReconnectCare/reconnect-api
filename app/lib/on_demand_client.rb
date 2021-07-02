@@ -70,7 +70,7 @@ class OnDemandClient
         conference.reason,
         "API",
         patient.cell_phone,
-        provider.phy_code,
+        provider&.phy_code,
         conference.start_time.iso8601,
         conference.joined_time.iso8601,
         conference.end_time.iso8601,
