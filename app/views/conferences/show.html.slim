@@ -33,11 +33,18 @@
   p
     strong Contestants:
     =< @conference.contestants
+  p
+    strong Recording:
+    - if @conference.recording.attached?
+      audio controls="controls" src=recording_conference_path(@conference)
+        | Your browser does not support the HTML5 Audio element.
+    - else
+      | Recording not available
 
   div.mb-8
-    p:strong Voice Calls
+    p:strong.font-bold Voice Calls
     == render 'voice_calls/table', voice_calls: @conference.voice_calls
 
   div.mb-8
-    p:strong Text Messages
+    p:strong.font-bold Text Messages
     == render "text_messages/table", text_messages: @conference.text_messages

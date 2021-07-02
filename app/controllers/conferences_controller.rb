@@ -46,13 +46,11 @@ class ConferencesController < ApplicationController
     end
   end
 
-  # DELETE /conferences/1 or /conferences/1.json
-  def destroy
-    @conference.destroy
-    respond_to do |format|
-      format.html { redirect_to conferences_url, notice: "Conference was successfully destroyed." }
-      format.json { head :no_content }
-    end
+  def recording
+    send_data @conference.recording.download,
+      type: @conference.recording.content_type,
+      filename: @conference.recording.filename.to_s,
+      disposition: (params[:disposition] || "inline")
   end
 
   private

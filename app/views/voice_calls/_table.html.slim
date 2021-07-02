@@ -24,5 +24,3 @@ table.table
         td = voice_call.created_at.to_formatted_s(:long)
         td.actions
           =< link_to 'Show', voice_call
-          =< link_to 'Edit', edit_voice_call_path(voice_call)
-          =< link_to 'Destroy', voice_call, data: { confirm: 'Are you sure?' }, method: :delete

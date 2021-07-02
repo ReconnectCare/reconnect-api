@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  resources :voice_calls
-  resources :settings
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   #### ADMIN ####
@@ -12,12 +10,18 @@ Rails.application.routes.draw do
   end
 
   #### ROUTES ####
-  resources :conferences
+  resources :conferences, except: [:destroy] do
+    member do
+      get :recording
+    end
+  end
   resources :patients
   resources :providers
   resources :conference_numbers, except: [:update, :edit]
   resources :api_tokens
   resources :text_messages, only: [:index, :show]
+  resources :voice_calls, only: [:index, :show]
+  resources :settings
 
   devise_for :users
 

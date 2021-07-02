@@ -53,6 +53,11 @@ class PatientsController < ApplicationController
       format.html { redirect_to patients_url, notice: "Patient was successfully destroyed." }
       format.json { head :no_content }
     end
+  rescue ActiveRecord::InvalidForeignKey
+    respond_to do |format|
+      format.html { redirect_to patients_url, alert: "Can't destory, has dependent data." }
+      format.json { render json: {error: "Can't destory, has dependent data."} }
+    end
   end
 
   private

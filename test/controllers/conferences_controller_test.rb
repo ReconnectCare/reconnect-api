@@ -41,12 +41,4 @@ class ConferencesControllerTest < ActionDispatch::IntegrationTest
     patch conference_url(@conference), params: {conference: attributes_for(:conference)}
     assert_redirected_to conference_url(@conference)
   end
-
-  test "should destroy conference" do
-    assert_difference("Conference.count", -1) do
-      delete conference_url(@conference)
-    end
-
-    assert_redirected_to conferences_url
-  end
 end
