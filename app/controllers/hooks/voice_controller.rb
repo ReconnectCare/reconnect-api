@@ -80,7 +80,7 @@ class Hooks::VoiceController < Hooks::HooksController
         conference_handled
       end
     else
-      builder.say "Goodbye"
+      builder.say(message: "Goodbye")
       builder.hangup
     end
 
