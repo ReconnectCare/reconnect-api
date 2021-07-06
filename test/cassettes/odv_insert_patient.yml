@@ -46,10 +46,10 @@ http_interactions:
   recorded_at: Wed, 09 Jun 2021 17:42:41 GMT
 - request:
     method: post
-    uri: https://ondemandapi.ondemandvisit.com/api/Patient/InsertPatient?AccountID=ODV1058
+    uri: https://ondemandapi.ondemandvisit.com/api/Patient/InsertPatient
     body:
       encoding: UTF-8
-      string: '{"FirstName":"TestFirst","MiddleName":"M","LastName":"TestLast","Dob":"2020-11-03T14:45:42.940581+05:30","Gender":"Male","OfficePhone":null,"CellPhone":"(110)
+      string: '{"AccountID":"ODV1058","FirstName":"TestFirst","MiddleName":"M","LastName":"TestLast","Dob":"2020-11-03T14:45:42.940581+05:30","Gender":"Male","OfficePhone":null,"CellPhone":"(110)
         254 2546","EmailID":"test@test.com","Street":"123 main","City":"anytown","State":"CA","Country":239,"Zipcode":"90121","IsEmailVerified":null,"RegThrough":null}'
     headers:
       Authorization:
