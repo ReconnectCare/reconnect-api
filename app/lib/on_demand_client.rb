@@ -136,11 +136,13 @@ class OnDemandClient
   def insert_patient od_patient
     endpoint = "/api/Patient/InsertPatient"
 
-    params = camelcase_params(od_patient.to_h)
+    params = {AccountId: "ODV1058"}
+
+    json = camelcase_params(od_patient.to_h)
 
     resp = HTTP.auth("Bearer #{auth_token.token}")
       .headers(accept: "application/json", 'Content-Type': "application/json")
-      .post(full_url(endpoint), json: params)
+      .post(full_url(endpoint), params: params, json: json)
 
     if resp.code != 200
       ExceptionNotifier.notify_exception(
