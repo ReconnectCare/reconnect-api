@@ -136,7 +136,7 @@ class OnDemandClient
   def insert_patient od_patient
     endpoint = "/api/Patient/InsertPatient"
 
-    params = {AccountId: "ODV1058"}
+    params = {AccountID: "ODV1058"}
 
     json = camelcase_params(od_patient.to_h)
 
@@ -158,7 +158,7 @@ class OnDemandClient
   def schedule_appointment od_visit
     endpoint = "/api/Appointment/ScheduleVisit"
 
-    params = {AccountId: "ODV1058"}
+    params = {AccountID: "ODV1058"}
 
     json = camelcase_params(od_visit.to_h)
 
@@ -181,7 +181,7 @@ class OnDemandClient
     endpoint = "/api/Appointment/GetOnDemandAvilableProvider"
 
     params = {
-      AccountId: "ODV1058",
+      AccountID: "ODV1058",
       State: state,
       VisitDateTime: DateTime.now.utc.iso8601
     }
