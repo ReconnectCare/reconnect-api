@@ -8,6 +8,8 @@ class SendPatientToOnDemandWorkerTest < ActiveSupport::TestCase
   end
 
   test "perform" do
+    @patient.update(odv_id: nil)
+
     mock = Minitest::Mock.new
     mock.expect :insert_patient, 1, [OnDemandClient::Patient]
 
@@ -20,5 +22,19 @@ class SendPatientToOnDemandWorkerTest < ActiveSupport::TestCase
     @patient.reload
 
     assert_equal "1", @patient.odv_id
+  end
+
+  test "perform; alreay sent" do
+    mock = Minitest::Mock.new
+
+    OnDemandClient.stub :new, mock do
+      SendPatientToOnDemandWorker.new.perform(@patient.id)
+    end
+
+    assert_mock mock
+
+    @patient.reload
+
+    assert_equal "1002.3", @patient.odv_id
   end
 end

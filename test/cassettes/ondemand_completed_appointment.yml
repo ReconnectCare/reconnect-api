@@ -46,7 +46,7 @@ http_interactions:
   recorded_at: Wed, 30 Jun 2021 19:49:26 GMT
 - request:
     method: post
-    uri: https://ondemandapi.ondemandvisit.com/api/Appointment/ScheduleVisit?AccountId=ODV1058
+    uri: https://ondemandapi.ondemandvisit.com/api/Appointment/ScheduleVisit?AccountID=ODV1058
     body:
       encoding: UTF-8
       string: '{"PatID":27769,"PatientName":"DEMOAPI TEST","Reason":"Covid Symptoms","AppType":"Video","PhoneNo":"(100)
