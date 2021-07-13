@@ -114,7 +114,7 @@ API
         -d 'patient[date_of_birth]=2000-12-31' \
         -d 'patient[gender]=male' \
         -d 'patient[office_phone]=' \
-        -d 'patient[cell_phone]=303-875-2721' \
+        -d 'patient[cell_phone]=303-359-3041' \
         -d 'patient[email]=candland@gmail.com' \
         -d 'patient[street]=123 main st' \
         -d 'patient[street_2]=' \

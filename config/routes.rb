@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   resources :text_messages, only: [:index, :show]
   resources :voice_calls, only: [:index, :show]
   resources :settings
+  resources :request_logs, only: [:index, :show]
 
   devise_for :users
 

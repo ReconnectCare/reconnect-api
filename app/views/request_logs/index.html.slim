@@ -1,0 +1,20 @@
+== render "shared/page_header", title: "Request Logs", icon: "fa-file" do
+
+.panel
+  table.table
+    thead
+      tr
+        th Status
+        th Verb
+        th Uri
+        th Duration
+        th
+
+    tbody
+      - @request_logs.each do |request_log|
+        tr
+          td = request_log.status
+          td = request_log.verb.upcase
+          td = request_log.uri
+          td = request_log.duration
+          td = link_to 'Show', request_log

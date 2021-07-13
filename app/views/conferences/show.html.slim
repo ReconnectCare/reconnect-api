@@ -13,6 +13,9 @@
     strong Start time:
     =< @conference.start_time.to_formatted_s(:long)
   p
+    strong Joined time:
+    =< @conference.joined_time&.to_formatted_s(:long)
+  p
     strong End time:
     =< @conference.end_time&.to_formatted_s(:long)
   p

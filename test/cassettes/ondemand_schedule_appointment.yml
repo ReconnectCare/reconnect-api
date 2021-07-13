@@ -16,7 +16,7 @@ http_interactions:
       Host:
       - ondemandapi.ondemandvisit.com
       User-Agent:
-      - http.rb/4.4.1
+      - http.rb/5.0.1
   response:
     status:
       code: 200
@@ -35,15 +35,15 @@ http_interactions:
       X-Powered-By:
       - ASP.NET
       Date:
-      - Wed, 30 Jun 2021 19:35:29 GMT
+      - Tue, 13 Jul 2021 21:40:27 GMT
       Connection:
       - close
       Content-Length:
       - '358'
     body:
       encoding: UTF-8
-      string: '{"access_token":"OBiVQ-SgN9wo3ac8pn5V-WwHGQRwPSjlju1cRoVi4zYDCUdaQy61a1JDLlzrusO3TupNQilZbEW7i1yfzvxL3c2M9AmnBSWZhy7zycytsQzUoJ7akPrCNEYjwvxJ8hxG1DXLkS1dCHo6sk1Ft9TAMMX80E9vr6T8RIg0bkglBsTB6JDeNRMpF0z50Zl_a2LtU3P3pSE5IHS9oQI6sYi5ikzRY4lclN2_kRh8oAoOCDztLomL2Ty1g8bYuFBLRHaNZiOnqvH1wU4zV4km8oR0pNfideqk3YWahhsAm8YysFM","token_type":"bearer","expires_in":1799}'
-  recorded_at: Wed, 30 Jun 2021 19:38:35 GMT
+      string: '{"access_token":"FKX2VVnwJICid0afl6v6tV6jOQ9t_rbFUdBlHLzaL6khE14SPjlB0qv-tpK98DpW2o6Q19AP1bhtBTDZGUfTY_4hEfXPMVRvF3aWEsltGpV8pdsoe52nxUtoWXbzlSAlONKhEtr1uI5F6M96XkKbeGD1TOcOcGHUHF_Ou-OZCRZ_FpjgYxDbklQjXO3S1fvLlp2XWkie0KpCKOg17k5GouhRUalTLeqjGiutMGzafn8q-tsLdMcdEFEHH249sYemRN136x0xq-grQzjcO4MvuoxX1C9OKO58Q5l8avHYKMo","token_type":"bearer","expires_in":1799}'
+  recorded_at: Tue, 13 Jul 2021 21:43:44 GMT
 - request:
     method: post
     uri: https://ondemandapi.ondemandvisit.com/api/Appointment/ScheduleVisit?AccountID=ODV1058
@@ -53,7 +53,7 @@ http_interactions:
         000-0000","PhyCode":"DC6429","Latitude":"","Longitude":"","CurrentLocation":"CA","CurrentState":"CA","patientPlatform":"API","patPlatformDesc":"API","CreatedFrom":3}'
     headers:
       Authorization:
-      - Bearer OBiVQ-SgN9wo3ac8pn5V-WwHGQRwPSjlju1cRoVi4zYDCUdaQy61a1JDLlzrusO3TupNQilZbEW7i1yfzvxL3c2M9AmnBSWZhy7zycytsQzUoJ7akPrCNEYjwvxJ8hxG1DXLkS1dCHo6sk1Ft9TAMMX80E9vr6T8RIg0bkglBsTB6JDeNRMpF0z50Zl_a2LtU3P3pSE5IHS9oQI6sYi5ikzRY4lclN2_kRh8oAoOCDztLomL2Ty1g8bYuFBLRHaNZiOnqvH1wU4zV4km8oR0pNfideqk3YWahhsAm8YysFM
+      - Bearer FKX2VVnwJICid0afl6v6tV6jOQ9t_rbFUdBlHLzaL6khE14SPjlB0qv-tpK98DpW2o6Q19AP1bhtBTDZGUfTY_4hEfXPMVRvF3aWEsltGpV8pdsoe52nxUtoWXbzlSAlONKhEtr1uI5F6M96XkKbeGD1TOcOcGHUHF_Ou-OZCRZ_FpjgYxDbklQjXO3S1fvLlp2XWkie0KpCKOg17k5GouhRUalTLeqjGiutMGzafn8q-tsLdMcdEFEHH249sYemRN136x0xq-grQzjcO4MvuoxX1C9OKO58Q5l8avHYKMo
       Accept:
       - application/json
       Content-Type:
@@ -63,7 +63,7 @@ http_interactions:
       Host:
       - ondemandapi.ondemandvisit.com
       User-Agent:
-      - http.rb/4.4.1
+      - http.rb/5.0.1
   response:
     status:
       code: 200
@@ -74,7 +74,7 @@ http_interactions:
       Pragma:
       - no-cache
       Content-Length:
-      - '572'
+      - '573'
       Content-Type:
       - application/json; charset=utf-8
       Expires:
@@ -86,11 +86,11 @@ http_interactions:
       X-Powered-By:
       - ASP.NET
       Date:
-      - Wed, 30 Jun 2021 19:35:29 GMT
+      - Tue, 13 Jul 2021 21:40:31 GMT
       Connection:
       - close
     body:
       encoding: UTF-8
-      string: '{"VisitID":23405.0,"Token":"T1==cGFydG5lcl9pZD00NTgzMTkxMiZzaWc9MDRjMmU2NzA1YWI2OGY2YzRlMzA4ZTkzMzYyZjNlZjk3MWM4OWQ1NzpzZXNzaW9uX2lkPTFfTVg0ME5UZ3pNVGt4TW41LU1UWXlOVEE0TVRreE5qTTNNbjQzVG05TldqbExTbTVTT0U4MmNYQk9iMVJUVkU1WlFtcC1VSDQmY3JlYXRlX3RpbWU9MTYyNTA4MTcyOSZub25jZT04NTU0OTYmcm9sZT1QVUJMSVNIRVImZXhwaXJlX3RpbWU9MTYyNTY4NjUyOSZjb25uZWN0aW9uX2RhdGE9bmFtZSUzZERFTU9BUEkrVEVTVA==","SessionID":"1_MX40NTgzMTkxMn5-MTYyNTA4MTkxNjM3Mn43Tm9NWjlLSm5SOE82cXBOb1RTVE5ZQmp-UH4","PatientMeetingLink":"https://app.reconnectcare.com/VisitSessionRoom.aspx?room=50682377&PID=Mjc3Njk="}'
-  recorded_at: Wed, 30 Jun 2021 19:38:36 GMT
+      string: '{"VisitID":23632.0,"Token":"T1==cGFydG5lcl9pZD00NTgzMTkxMiZzaWc9NWI1ZTRjM2Q3YTg3MWRmZGEzNTBlNmZmMWFkOTFiM2MwMjRjOWEyZDpzZXNzaW9uX2lkPTFfTVg0ME5UZ3pNVGt4TW41LU1UWXlOakl4TWpZeU5qRTRNMzVGVDFCS2VHaG5UbTVYTUc4MVYzWXdaRTVMWm5aR01sVi1VSDQmY3JlYXRlX3RpbWU9MTYyNjIxMjQyOSZub25jZT04OTgxNDMmcm9sZT1QVUJMSVNIRVImZXhwaXJlX3RpbWU9MTYyNjgxNzIyOSZjb25uZWN0aW9uX2RhdGE9bmFtZSUzZERFTU9BUEkrVEVTVA==","SessionID":"1_MX40NTgzMTkxMn5-MTYyNjIxMjYyNjE4M35FT1BKeGhnTm5XMG81V3YwZE5LZnZGMlV-UH4","PatientMeetingLink":"https://app.reconnectcare.com/VisitSessionRoom.aspx?room=428135866&PID=Mjc3Njk="}'
+  recorded_at: Tue, 13 Jul 2021 21:43:48 GMT
 recorded_with: VCR 6.0.0

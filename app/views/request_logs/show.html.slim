@@ -1,0 +1,37 @@
+== render "shared/page_header", title: "Request Logs" do
+  =< link_to 'Back', request_logs_path
+
+.panel
+  p
+    strong Status:
+    =< @request_log.status
+  p
+    strong Verb:
+    =< @request_log.verb.upcase
+  p
+    strong Uri:
+    =< @request_log.uri
+  p
+    strong Start:
+    =< @request_log.start
+  p
+    strong End:
+    =< @request_log.end
+  p
+    strong Duration:
+    =< @request_log.duration
+  p
+    strong Request headers:
+    =< @request_log.request_headers
+  p
+    strong Request body:
+    =< @request_log.request_body
+  p
+    strong Response headers:
+    =< @request_log.response_headers
+  p
+    strong Response body:
+    =< @request_log.response_body
+  p
+    strong Exception:
+    =< @request_log.exception

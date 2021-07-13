@@ -16,7 +16,7 @@ http_interactions:
       Host:
       - ondemandapi.ondemandvisit.com
       User-Agent:
-      - http.rb/4.4.1
+      - http.rb/5.0.1
   response:
     status:
       code: 200
@@ -63,7 +63,7 @@ http_interactions:
       Host:
       - ondemandapi.ondemandvisit.com
       User-Agent:
-      - http.rb/4.4.1
+      - http.rb/5.0.1
   response:
     status:
       code: 200

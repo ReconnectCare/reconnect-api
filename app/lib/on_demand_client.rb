@@ -139,7 +139,8 @@ class OnDemandClient
     json = camelcase_params(od_patient.to_h)
     json["AccountID"] = "ODV1058"
 
-    resp = HTTP.auth("Bearer #{auth_token.token}")
+    resp = HTTP.use(instrumentation: {instrumenter: ActiveSupport::Notifications.instrumenter})
+      .auth("Bearer #{auth_token.token}")
       .headers(accept: "application/json", 'Content-Type': "application/json")
       .post(full_url(endpoint), json: json)
 
@@ -161,7 +162,8 @@ class OnDemandClient
 
     json = camelcase_params(od_visit.to_h)
 
-    resp = HTTP.auth("Bearer #{auth_token.token}")
+    resp = HTTP.use(instrumentation: {instrumenter: ActiveSupport::Notifications.instrumenter})
+      .auth("Bearer #{auth_token.token}")
       .headers(accept: "application/json", 'Content-Type': "application/json")
       .post(full_url(endpoint), params: params, json: json)
 
@@ -185,7 +187,8 @@ class OnDemandClient
       VisitDateTime: DateTime.now.utc.iso8601
     }
 
-    resp = HTTP.auth("Bearer #{auth_token.token}")
+    resp = HTTP.use(instrumentation: {instrumenter: ActiveSupport::Notifications.instrumenter})
+      .auth("Bearer #{auth_token.token}")
       .headers(accept: "application/json")
       .get(full_url(endpoint), params: params)
 
@@ -213,7 +216,9 @@ class OnDemandClient
       password: Rails.application.credentials.on_demand[:password]
     }
 
-    resp = HTTP.headers(accept: "application/json", 'Content-Type': "application/x-www-form-urlencoded").get(full_url("/AuthToken"), form: params)
+    resp = HTTP.use(instrumentation: {instrumenter: ActiveSupport::Notifications.instrumenter})
+      .headers(accept: "application/json", 'Content-Type': "application/x-www-form-urlencoded")
+      .get(full_url("/AuthToken"), form: params)
 
     if resp.code != 200
       raise "On Demand Auth Error (#{resp.status}): #{resp.body}"

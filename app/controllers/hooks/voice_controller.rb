@@ -98,6 +98,7 @@ class Hooks::VoiceController < Hooks::HooksController
     render xml: builder.to_s
   end
 
+  # Conference Status Callback
   def status
     conference = Conference.find(params[:id])
     status = twilio_params["StatusCallbackEvent"]
@@ -111,7 +112,11 @@ class Hooks::VoiceController < Hooks::HooksController
     when "conference-start"
       conference.update!(status: Conference::Statuses.in_progress)
     when "conference-end"
-      conference.update!(end_time: DateTime.now.utc, status: Conference::Statuses.completed)
+      if !voice_call.conference.completed?
+        conference.update!(end_time: DateTime.now.utc, status: Conference::Statuses.completed)
+      end
+      # Conf might end earlier in call_status, but this should only be sent if a conference
+      # has been started and is now ended.
       CompleteOnDemandAppointmentWorker.perform_async conference.id
     end
 
@@ -122,6 +127,11 @@ class Hooks::VoiceController < Hooks::HooksController
     provider_id = twilio_params[:CallSid]
     voice_call = VoiceCall.find_by(provider_id: provider_id)
     voice_call.update(status: twilio_params[:CallStatus])
+
+    if twilio_params[:CallStatus] == "completed" && !voice_call.conference.completed?
+      voice_call.conference.update!(end_time: DateTime.now.utc, status: Conference::Statuses.completed)
+    end
+
     render xml: builder.to_s
   end
 
