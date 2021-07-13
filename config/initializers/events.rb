@@ -8,7 +8,6 @@ ActiveSupport::Notifications.subscribe "request.http" do |event|
   log.duration = event.duration
 
   response = event.payload[:response]
-  puts response.request
   if response
     request = response.request
     if request
@@ -27,6 +26,4 @@ ActiveSupport::Notifications.subscribe "request.http" do |event|
   end
 
   log.save!
-
-  Rails.logger.info "REQUEST.HTTP\n\n"
 end

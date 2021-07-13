@@ -30,7 +30,7 @@ class OnDemandClientTest < ActiveSupport::TestCase
     OnDemandClient.new.reset_token!
     VCR.use_cassette :ondemand_schedule_appointment do
       resp = OnDemandClient.new.schedule_appointment visit
-      assert_equal 23405.0, resp.visit_id
+      assert_equal 23632.0, resp.visit_id
     end
   end
 
